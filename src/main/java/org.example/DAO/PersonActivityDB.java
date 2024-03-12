@@ -4,17 +4,32 @@ import org.example.DTO.ActivityDTO;
 import org.example.DTO.PersonActivityDTO;
 import org.example.models.Activity;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 public class PersonActivityDB {
-    private static String url = "jdbc:postgresql://192.168.100.31:5432/activities";
-    private static String username = "postgres";
-    private static String password = "1234";
+    private static String url;
+    private static String username;
+    private static String password;
+    private static Properties propertiesDB;
+    static{
+        propertiesDB = new Properties();
+        try {
+            propertiesDB.load(ActivityDB.class.getClassLoader().getResourceAsStream("database.properties"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        url = propertiesDB.getProperty("url");
+        username = propertiesDB.getProperty("username");
+        password = propertiesDB.getProperty("password");
+
+    }
     public static List<PersonActivityDTO> select() {
 
         List<PersonActivityDTO> activities = new ArrayList<PersonActivityDTO>();
