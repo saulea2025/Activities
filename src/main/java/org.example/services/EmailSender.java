@@ -1,34 +1,20 @@
 package org.example.services;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.List;
-import java.util.Properties;
-
-import javax.mail.Authenticator;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
-
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
 
-import static org.apache.pdfbox.pdmodel.font.Standard14Fonts.FontName.HELVETICA_BOLD;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.sql.*;
+import java.util.Properties;
 
 public class EmailSender {
     private Properties sessionProps;
@@ -42,14 +28,14 @@ public class EmailSender {
 
     public void setProps() {
         try {
-            sessionProps.load(getClass().getClassLoader().getResourceAsStream("files/session.properties"));
-            librarySenderProps.load(getClass().getClassLoader().getResourceAsStream("files/librarySender.properties"));
+            sessionProps.load(getClass().getClassLoader().getResourceAsStream("src/files/librarySender.properties"));
+            librarySenderProps.load(getClass().getClassLoader().getResourceAsStream("src/files/session.properties"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void sendPdfReport(String header, String text, List<Person> to) {
+    public void sendPdfReport(String header, String text, String recipientEmail) {
         ByteArrayOutputStream pdfOutputStream = generatePdfReport(header, text);
 
         Session session = Session.getInstance(sessionProps, new Authenticator() {
@@ -75,9 +61,7 @@ public class EmailSender {
             pdfAttachment.setContent(pdfOutputStream.toByteArray(), "application/pdf");
             multipart.addBodyPart(pdfAttachment);
 
-            for (Person person : to) {
-                message.addRecipient(Message.RecipientType.TO, new InternetAddress(person.getEmail()));
-            }
+            message.setRecipient(Message.RecipientType.TO, new InternetAddress("saule.anafinova@gmail.com"));
 
             message.setContent(multipart);
 
@@ -113,9 +97,9 @@ public class EmailSender {
                 contentStream.endText();
 
                 // Fetch data from the database
-                String jdbcURL = "jdbc:your_database_url";
-                String username = "your_username";
-                String password = "your_password";
+                String jdbcURL = "jdbc:postgresql://192.168.50.142:5432/postgres";
+                String username = "postgres";
+                String password = "budapest";
                 try (Connection connection = DriverManager.getConnection(jdbcURL, username, password)) {
                     String query = "SELECT name, email FROM person";
                     try (Statement statement = connection.createStatement();
@@ -148,5 +132,4 @@ public class EmailSender {
         }
         return outputStream;
     }
-
 }
