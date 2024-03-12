@@ -28,8 +28,8 @@ public class EmailSender {
 
     public void setProps() {
         try {
-            sessionProps.load(getClass().getClassLoader().getResourceAsStream("src/files/librarySender.properties"));
-            librarySenderProps.load(getClass().getClassLoader().getResourceAsStream("src/files/session.properties"));
+            sessionProps.load(getClass().getClassLoader().getResourceAsStream("src/resources/librarySender.properties"));
+            librarySenderProps.load(getClass().getClassLoader().getResourceAsStream("src/resources/session.properties"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
