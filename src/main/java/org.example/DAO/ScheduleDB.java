@@ -2,8 +2,9 @@ package org.example.DAO;
 
 import org.example.DTO.ActivityDTO;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 
@@ -11,7 +12,7 @@ public class ScheduleDB {
     private static String url = "jdbc:postgresql://192.168.100.31:5432/activities";
     private static String username = "postgres";
     private static String password = "1234";
-    public static int add(int activityId, int personId, Date date) {
+    public static int add(int activityId, int personId) {
         try{
             Class.forName("org.postgresql.Driver");
             try (Connection conn = DriverManager.getConnection(url, username, password)){
@@ -20,7 +21,7 @@ public class ScheduleDB {
                 try(PreparedStatement preparedStatement = conn.prepareStatement(sql)){
                     preparedStatement.setInt(1, activityId);
                     preparedStatement.setInt(2, personId);
-                    preparedStatement.setDate(3, date);
+                    preparedStatement.setTimestamp(3, new Timestamp(0000000));//todo
                     return  preparedStatement.executeUpdate();
                 }
             }

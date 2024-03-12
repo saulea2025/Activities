@@ -1,5 +1,7 @@
 package org.example.DAO;
 
+import com.google.gson.internal.bind.util.ISO8601Utils;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -13,7 +15,7 @@ public class PersonDB {
             Class.forName("org.postgresql.Driver");
             try (Connection conn = DriverManager.getConnection(url, username, password)){
                 conn.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
-                String sql = "ALTER TABLE person SET current_activity_id=? WHERE id=?";
+                String sql = "UPDATE person SET current_activity_id=? WHERE id=?";
                 try(PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
                     preparedStatement.setInt(1, activityId);
                     preparedStatement.setInt(2, personId);

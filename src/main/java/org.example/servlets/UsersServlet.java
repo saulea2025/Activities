@@ -29,12 +29,12 @@ public class UsersServlet extends HttpServlet {
         response.getWriter().write(json);
     }
 
-/*    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         int personId = 1;//TODO вытащить из сессии
         int activityId = new Gson().fromJson(request.getReader(), IdDTO.class).getId();
-       // PersonDB.setCurrentActivity(activityId, personId);
-       // ScheduleDB.add(activityId, personId, Date.valueOf(request.getHeader("Date")));
+        PersonDB.setCurrentActivity(activityId, personId);
+        ScheduleDB.add(activityId, personId);
         response.setStatus(200);
-    }*/
+    }
 }
