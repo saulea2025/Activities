@@ -21,7 +21,7 @@ public class ScheduleDB {
                 try(PreparedStatement preparedStatement = conn.prepareStatement(sql)){
                     preparedStatement.setInt(1, activityId);
                     preparedStatement.setInt(2, personId);
-                    preparedStatement.setTimestamp(3, new Timestamp(0000000));//todo
+                    preparedStatement.setTimestamp(3, new Timestamp(new Date().getTime()));
                     return  preparedStatement.executeUpdate();
                 }
             }

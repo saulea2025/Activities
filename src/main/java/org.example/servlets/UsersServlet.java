@@ -33,7 +33,6 @@ public class UsersServlet extends HttpServlet {
             throws IOException {
         int personId = 1;//TODO вытащить из сессии
         int activityId = new Gson().fromJson(request.getReader(), IdDTO.class).getId();
-        PersonDB.setCurrentActivity(activityId, personId);
         ScheduleDB.add(activityId, personId);
         response.setStatus(200);
     }
