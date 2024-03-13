@@ -6,7 +6,6 @@ import org.example.DAO.PersonDB;
 import org.example.DAO.ScheduleDB;
 import org.example.DTO.ActivityDTO;
 import org.example.DTO.IdDTO;
-import org.example.DTO.PersonActivityDTO;
 import org.example.models.Person;
 
 import javax.servlet.annotation.WebServlet;
