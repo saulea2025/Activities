@@ -9,12 +9,8 @@ const LoginForm = () => {
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
     const loginUrl = baseUrl +'/login';
-    const test = () => {
-        history.push('/activities');
-    }
+
     const onSubmit = async () => {
-        history.push('/activities');
-        let res = false;
         if( email != '' && password != ''){
             await axios.post(loginUrl, {
                 "email": email,
@@ -24,6 +20,7 @@ const LoginForm = () => {
                     if(r.status == 200) {
                         console.log('success');
                         history.push('/activities');
+                        history.go('/activities');
                     } else {
                         console.log('fail');
 
@@ -56,7 +53,7 @@ const LoginForm = () => {
             </Login.Block>
             <Login.Input keyname="username" placeholder="Username" onChange={(ev) => setEmail(ev.target.value)}/>
             <Login.Input keyname="password" placeholder="Password" onChange={(ev) => setPassword(ev.target.value)}/>
-            <Login.Button keyname="submit" type="submit" onClick = {test}>
+            <Login.Button keyname="submit" type="submit" onClick = {onSubmit}>
                 Submit
             </Login.Button>
         </Login>
