@@ -1,18 +1,28 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Login, { Render } from 'react-login-page';
 import axios from "axios";
 import LoginForm from "./pages/login";
 
 const Activities = () => {
- let baseUrl = 'http://localhost:8080';
+ const baseUrl = 'http://localhost:8080';
  const [activities, setActivities] = React.useState([]);
- let activitiesUrl = baseUrl +'/activities';
 
- //useEffect(() => {
- //}, []);
 
- const getActivities = () => {
+ useEffect(() => {
+  getActivities().then(console.log('activities fetched'));
+ }, []);
 
+ const getActivities = async () => {
+     let activitiesUrl = baseUrl +'/activities';
+  await axios
+        .get(activitiesUrl)
+        .then((res) => {
+       console.log(res.data);
+       setActivities(res.data);
+      })
+      .catch((err) => {
+       console.log(err);
+      });
  }
 
 return (

@@ -4,13 +4,14 @@ import axios from "axios";
 import { useHistory } from 'react-router-dom';
 
 const LoginForm = () => {
-    let baseUrl = 'http://localhost:8080';
+    const baseUrl = 'http://localhost:8080';
     const history = useHistory();
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
-    const loginUrl = baseUrl +'/login';
+
 
     const onSubmit = async () => {
+        const loginUrl = baseUrl +'/login';
         if( email != '' && password != ''){
             await axios.post(loginUrl, {
                 "email": email,
