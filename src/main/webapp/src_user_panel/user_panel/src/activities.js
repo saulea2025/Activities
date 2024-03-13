@@ -8,7 +8,12 @@ const Activities = () => {
  const [activities, setActivities] = React.useState([]);
  let activitiesUrl = baseUrl +'/activities';
 
+ //useEffect(() => {
+ //}, []);
 
+ const getActivities = () => {
+
+ }
 
 return (
     <div><p>Hiiii!!!</p></div>
