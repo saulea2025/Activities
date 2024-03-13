@@ -1,5 +1,7 @@
-package services;
+package org.example.senders;
 
+import org.example.DAO.PersonDB;
+import org.example.models.Person;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
@@ -9,12 +11,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
-public class TomcatReportBot extends TelegramLongPollingBot {
-
-    public static void main(String[] args) {
-        TomcatReportBot bot = new TomcatReportBot();
-        bot.run();
-    }
+public class TelegramSender extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
@@ -34,7 +31,7 @@ public class TomcatReportBot extends TelegramLongPollingBot {
     public void run() {
         try {
             // Get the Telegram value using services.TelegramRetriever
-            String chatId = TelegramRetriever.getTelegramForPersonId(1); // Assuming id = 1
+            String chatId = PersonDB.getTelegram(1); // Assuming id = 1
 
             // Create a PDF
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

@@ -1,6 +1,4 @@
-package services;
-
-import services.DataToPdf;
+package org.example.senders;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Properties;
@@ -17,9 +15,9 @@ import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.mail.util.ByteArrayDataSource;
 
-public class PdfReportSender {
+public class EmailSender {
 
-    public static void main(String[] args) {
+    public void init() {
         // Generate PDF report
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         DataToPdf.generatePdfFromResultSet(outputStream);
@@ -30,7 +28,7 @@ public class PdfReportSender {
         //sendEmailWithAttachment("alenachzhen1999@gmail.com", "PDF Report", "Please find attached the PDF report.", "report.pdf", outputStream);
     }
 
-    public static void sendEmailWithAttachment(String to, String subject, String body, String attachmentFilename, ByteArrayOutputStream outputStream) {
+    public void sendEmailWithAttachment(String to, String subject, String body, String attachmentFilename, ByteArrayOutputStream outputStream) {
         // Sender's email ID needs to be mentioned
         String from = "saule.anafinova@gmail.com"; // Update with your email
 

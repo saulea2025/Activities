@@ -1,11 +1,11 @@
-package services;
+package org.example.senders;
 
 import java.sql.*;
 
 public class DatabaseConnector {
-    private static final String DB_URL = "jdbc:postgresql://192.168.50.142:5432/postgres";
+    private static final String DB_URL = "jdbc:postgresql://192.168.100.31:5432/activities";
     private static final String USERNAME = "postgres";
-    private static final String PASSWORD = "budapest";
+    private static final String PASSWORD = "1234";
 
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);

@@ -1,6 +1,6 @@
-package services;
+package org.example.senders;
 
-import services.Main;
+
 
 import java.util.Calendar;
 import java.util.Date;
@@ -8,11 +8,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class ScheduledMain {
-
-    public static void main(String[] args) {
-        // Schedule the execution at a specific time
-        scheduleExecution(14, 9); // 12:00 PM (noon)
-    }
 
     public static void scheduleExecution(int hour, int minute) {
         // Get the current date and time
@@ -34,7 +29,7 @@ public class ScheduledMain {
             @Override
             public void run() {
                 // Execute the main class
-                Main.main(new String[]{});
+                MainSender.start();
             }
         }, calendar.getTime());
     }

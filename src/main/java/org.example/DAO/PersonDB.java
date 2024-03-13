@@ -62,4 +62,25 @@ public class PersonDB {
         }
         return personOptional;
     }
+    public static String getTelegram(int id) {
+        String telegram = null;
+        try{
+            Class.forName("org.postgresql.Driver");
+            try (Connection conn = DriverManager.getConnection(url, username, password)){
+                conn.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
+                String sql = "select telegram FROM person where id=?";
+                try(PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+                    preparedStatement.setInt(1, id);
+                    ResultSet resultSet = preparedStatement.executeQuery();
+                    while (resultSet.next()) {
+                        telegram = resultSet.getString(1);
+                    }
+                }
+            }
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+        }
+        return telegram;
+    }
 }
