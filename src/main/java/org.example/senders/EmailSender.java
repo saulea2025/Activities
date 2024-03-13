@@ -17,7 +17,7 @@ import javax.mail.util.ByteArrayDataSource;
 
 public class EmailSender {
 
-    public void init() {
+    public void run() {
         // Generate PDF report
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         DataToPdf.generatePdfFromResultSet(outputStream);

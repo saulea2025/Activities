@@ -5,22 +5,17 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
+import org.example.DAO.ScheduleDB;
+import org.example.models.ScheduleForPDF;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.*;
+import java.util.List;
 
 public class DataToPdf {
     public static void generatePdfFromResultSet(OutputStream outputStream) {
-        String query = "SELECT * FROM person";
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        try {
-            connection = DatabaseConnector.getConnection();
-            preparedStatement = connection.prepareStatement(query);
-            resultSet = preparedStatement.executeQuery();
-
+        List<ScheduleForPDF> schedules = ScheduleDB.getSchedulesForPerson(1);//нужно переназначить, пока что статично для меня
             try (PDDocument document = new PDDocument()) {
                 PDPage page = new PDPage();
                 document.addPage(page);
@@ -30,16 +25,9 @@ public class DataToPdf {
                 contentStream.beginText();
                 contentStream.newLineAtOffset(100, 700);
                 int verticalOffset = 0;
-                while (resultSet.next()) {
-                    String data = resultSet.getInt("id") + " "
-                            + resultSet.getString("name") + " "
-                            + resultSet.getString("surname") + " "
-                            + resultSet.getString("role") + " "
-                            + resultSet.getString("email") + " "
-                            + resultSet.getString("telegram") + " "
-                            + resultSet.getString("password");
+                for(ScheduleForPDF schedule : schedules){
                     contentStream.newLineAtOffset(0, -verticalOffset);
-                    contentStream.showText(data);
+                    contentStream.showText(schedule.toString());
                     verticalOffset += 15;
                 }
                 contentStream.endText();
@@ -49,14 +37,5 @@ public class DataToPdf {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } finally {
-            DatabaseConnector.close(resultSet);
-            DatabaseConnector.close(preparedStatement);
-            DatabaseConnector.close(connection);
         }
     }
-}
