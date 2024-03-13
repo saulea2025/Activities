@@ -130,4 +130,22 @@ public class ActivityDB {
             System.out.println(ex);
         }
     }
+    public static void changeStatus(int activityId, String status) {
+
+        try{
+            Class.forName("org.postgresql.Driver");
+            try (Connection conn = DriverManager.getConnection(url, username, password)){
+                conn.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
+                String sql = "Update activity set status=? where id=? ";
+                try(PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+                    preparedStatement.setString(1, status);
+                    preparedStatement.setInt(2, activityId);
+                    preparedStatement.executeUpdate();
+                }
+            }
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+        }
+    }
 }
