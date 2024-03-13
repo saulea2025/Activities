@@ -5,7 +5,9 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
+import org.example.DAO.PersonDB;
 import org.example.DAO.ScheduleDB;
+import org.example.models.Person;
 import org.example.models.ScheduleForPDF;
 
 import java.io.IOException;
@@ -15,8 +17,10 @@ import java.util.List;
 
 public class DataToPdf {
     public static void generatePdfFromResultSet(OutputStream outputStream) {
-        List<ScheduleForPDF> schedules = ScheduleDB.getSchedulesForPerson(1);//нужно переназначить, пока что статично для меня
-            try (PDDocument document = new PDDocument()) {
+        int personId = 1;//нужно переназначить, пока что статично для меня
+        List<ScheduleForPDF> schedules = ScheduleDB.getSchedulesForPerson(personId);//для таблицы
+        Person person = PersonDB.getById(personId);//для первой строки в файле. Или можно в качестве названия pdf
+        try (PDDocument document = new PDDocument()) {
                 PDPage page = new PDPage();
                 document.addPage(page);
                 PDPageContentStream contentStream = new PDPageContentStream(document, page);
