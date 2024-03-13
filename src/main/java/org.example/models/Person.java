@@ -16,13 +16,15 @@ public class Person {
     private String role;
     private String email;
     private String telegram;
+    private String password;
 
-    public Person(String name, String surname, String role, String email, String telegram) {
+    public Person(String name, String surname, String role, String email, String telegram, String password) {
         this.name = name;
         this.surname = surname;
         this.role = role;
         this.email = email;
         this.telegram = telegram;
+        this.password = password;
     }
 
 }

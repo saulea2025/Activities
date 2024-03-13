@@ -9,9 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ActivityDTO {
-    private int id;
-    private String name;
-    private String priority;
-    private String status;
+public class PersonDTO {
+    private String email;
+    private String password;
 }

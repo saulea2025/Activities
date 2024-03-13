@@ -2,7 +2,6 @@ package org.example.servlets;
 
 import com.google.gson.Gson;
 import org.example.DAO.ActivityDB;
-import org.example.DAO.PersonActivityDB;
 import org.example.DTO.ActivityDTO;
 import org.example.DTO.PersonActivityDTO;
 
@@ -17,7 +16,7 @@ import java.util.List;
 public class ActivitiesServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
-        List<PersonActivityDTO> activities = PersonActivityDB.select();
+        List<PersonActivityDTO> activities = ActivityDB.select();
         String json = new Gson().toJson(activities);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

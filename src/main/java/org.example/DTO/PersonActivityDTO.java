@@ -1,15 +1,14 @@
 package org.example.DTO;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class PersonActivityDTO {
+    private int id;
     private String  activityName;
     private String priority;
     private String status;
