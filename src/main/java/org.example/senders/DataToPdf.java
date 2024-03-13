@@ -10,36 +10,57 @@ import org.example.DAO.ScheduleDB;
 import org.example.models.Person;
 import org.example.models.ScheduleForPDF;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.sql.*;
 import java.util.List;
 
 public class DataToPdf {
     public static void generatePdfFromResultSet(OutputStream outputStream) {
-        int personId = 1;//нужно переназначить, пока что статично для меня
-        List<ScheduleForPDF> schedules = ScheduleDB.getSchedulesForPerson(personId);//для таблицы
-        Person person = PersonDB.getById(personId);//для первой строки в файле. Или можно в качестве названия pdf
+        int personId = 1; // Need to reassign, currently static for testing
+        List<ScheduleForPDF> schedules = ScheduleDB.getSchedulesForPerson(personId);
+        Person person = PersonDB.getById(personId);
         try (PDDocument document = new PDDocument()) {
-                PDPage page = new PDPage();
-                document.addPage(page);
-                PDPageContentStream contentStream = new PDPageContentStream(document, page);
-                contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 12);
+            PDPage page = new PDPage();
+            document.addPage(page);
+            PDPageContentStream contentStream = new PDPageContentStream(document, page);
+            contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 10);
 
+            // Set background color
+            contentStream.setNonStrokingColor(Color.WHITE);
+            contentStream.addRect(0, 0, page.getMediaBox().getWidth(), page.getMediaBox().getHeight());
+            contentStream.fill();
+
+            // Set header color
+            contentStream.setNonStrokingColor(Color.BLUE);
+            contentStream.addRect(0, page.getMediaBox().getHeight() - 20, page.getMediaBox().getWidth(), 20);
+            contentStream.fill();
+
+            contentStream.setNonStrokingColor(Color.BLACK);
+            contentStream.beginText();
+            contentStream.newLineAtOffset(50, page.getMediaBox().getHeight() - 10);
+            contentStream.showText("Schedule for: " + person.getName()); // Assuming getName() retrieves person's name
+            contentStream.endText();
+
+            // Set table lines and borders color
+            contentStream.setStrokingColor(Color.BLACK);
+
+            int startY = (int) (page.getMediaBox().getHeight() - 40); // Start position for table
+            int rowHeight = 15; // Height of each row
+
+            for (ScheduleForPDF schedule : schedules) {
                 contentStream.beginText();
-                contentStream.newLineAtOffset(100, 700);
-                int verticalOffset = 0;
-                for(ScheduleForPDF schedule : schedules){
-                    contentStream.newLineAtOffset(0, -verticalOffset);
-                    contentStream.showText(schedule.toString());
-                    verticalOffset += 15;
-                }
+                contentStream.newLineAtOffset(50, startY);
+                contentStream.showText(schedule.toString());
                 contentStream.endText();
-                contentStream.close();
-                document.save(outputStream);
-                System.out.println("PDF created successfully");
-            } catch (IOException e) {
-                e.printStackTrace();
+                startY -= rowHeight;
             }
+
+            contentStream.close();
+            document.save(outputStream);
+            System.out.println("PDF created successfully");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
+}
