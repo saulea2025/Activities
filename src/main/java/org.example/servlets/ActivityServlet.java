@@ -1,7 +1,7 @@
 package org.example.servlets;
 
 import com.google.gson.Gson;
-import org.example.DAO.PersonActivityDB;
+import org.example.DAO.ActivityDB;
 import org.example.DTO.IdDTO;
 
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +16,7 @@ public class ActivityServlet extends HttpServlet {
             throws IOException {
         int personId = new Gson().fromJson(request.getReader(), IdDTO.class).getId();
         int activityId =Integer.parseInt(request.getPathInfo().substring(1));
-        PersonActivityDB.setPersonForActivity(activityId, personId);
+        ActivityDB.setPersonForActivity(activityId, personId);
         response.setStatus(200);
     }
 }

@@ -1,7 +1,6 @@
 package org.example.servlets;
 
 import com.google.gson.Gson;
-import org.example.DAO.PersonActivityDB;
 import org.example.DAO.PersonDB;
 import org.example.DAO.ScheduleDB;
 import org.example.DTO.ActivityDTO;

@@ -14,11 +14,12 @@ public class Activity {
     private String  name;
     private String priority;
     private String status;
+    private int personId;
 
-    public Activity(String name, String priority, String status) {
+    public Activity(String name, String priority, String status, int personId) {
         this.name = name;
         this.priority = priority;
         this.status = status;
+        this.personId = personId;
     }
-
 }

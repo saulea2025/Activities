@@ -32,7 +32,7 @@ public class ScheduleDB {
             Class.forName("org.postgresql.Driver");
             try (Connection conn = DriverManager.getConnection(url, username, password)){
                 conn.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
-                String sql = "INSERT INTO person_activity_schedule (activity_id, person_id, date) Values (?, ?, ?)";
+                String sql = "INSERT INTO schedule (activity_id, person_id, date) Values (?, ?, ?)";
                 try(PreparedStatement preparedStatement = conn.prepareStatement(sql)){
                     preparedStatement.setInt(1, activityId);
                     preparedStatement.setInt(2, personId);

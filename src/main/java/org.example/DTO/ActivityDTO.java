@@ -10,6 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ActivityDTO {
+    private int id;
     private String name;
     private String priority;
     private String status;
