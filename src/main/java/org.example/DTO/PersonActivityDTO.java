@@ -15,4 +15,5 @@ public class PersonActivityDTO {
     private String status;
     private String personName;
     private String personSurname;
+    private String role;
 }

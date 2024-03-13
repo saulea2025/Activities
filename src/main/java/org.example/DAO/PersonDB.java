@@ -33,7 +33,6 @@ public class PersonDB {
 
     }
     public static Optional<Person> findByEmailAndPassword(String userEmail, String userPassword) {
-        System.out.println("find person by " + userEmail + " " + userPassword);
         Optional<Person> personOptional = Optional.empty();
         try{
             Class.forName("org.postgresql.Driver");

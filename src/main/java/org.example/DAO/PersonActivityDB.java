@@ -37,7 +37,7 @@ public class PersonActivityDB {
             Class.forName("org.postgresql.Driver");
             try (Connection conn = DriverManager.getConnection(url, username, password)){
                 conn.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
-                String sql = "select activity.name, activity.priority, activity.status, person.name, person.surname\n" +
+                String sql = "select activity.name, activity.priority, activity.status, person.name, person.surname, person.role\n" +
                         "from activity left join person_activity\n" +
                         "on activity.id = person_activity.activity_id\n" +
                         "left join person\n" +
@@ -50,7 +50,8 @@ public class PersonActivityDB {
                         String status = resultSet.getString(3);
                         String name = resultSet.getString(4);
                         String surname = resultSet.getString(5);
-                        PersonActivityDTO activity = new PersonActivityDTO(activityName, priority, status, name, surname);
+                        String role = resultSet.getString(6);
+                        PersonActivityDTO activity = new PersonActivityDTO(activityName, priority, status, name, surname, role);
                         activities.add(activity);
                     }
                 }
