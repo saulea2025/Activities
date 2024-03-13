@@ -29,11 +29,8 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("person", personOptional.get());
             response.setStatus(200);
         }
-        else{
+        else {
             response.setStatus(401);//?
         }
-
-
-
     }
 }
