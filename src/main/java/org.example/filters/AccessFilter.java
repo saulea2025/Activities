@@ -26,15 +26,11 @@ public class AccessFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
         String path = httpRequest.getServletPath();
         HttpSession session = httpRequest.getSession();
-        //System.out.println("Path: " + path);
-        //System.out.println("Session: " + session);
         if (nonNull(session.getAttribute("person")) && (AUTHORIZED_ALLOWED_PAGES.contains(path) || path.startsWith("/activities/") || path.startsWith("/users/"))){
-            //System.out.println("autorized");
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
         else {
-            //System.out.println("unautorized");
             if(UNAUTHORIZED_ALLOWED_PAGES.contains(path)) {
                 filterChain.doFilter(servletRequest, servletResponse);
                 return;
