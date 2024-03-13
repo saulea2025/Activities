@@ -50,11 +50,8 @@ public class ActivityDB {
                         String priority = resultSet.getString(3);
                         String status = resultSet.getString(4);
                         String name = resultSet.getString(5);
-                        System.out.println("name: " + name);
                         String surname = resultSet.getString(6);
-                        System.out.println("surname: " + surname);
                         PersonActivityDTO activity = new PersonActivityDTO(id, activityName, priority, status, name, surname);
-                        System.out.println(activity);
                         activities.add(activity);
                     }
                 }
