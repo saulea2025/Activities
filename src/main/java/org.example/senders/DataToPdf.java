@@ -51,6 +51,8 @@ public class DataToPdf {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         } finally {
             DatabaseConnector.close(resultSet);
             DatabaseConnector.close(preparedStatement);

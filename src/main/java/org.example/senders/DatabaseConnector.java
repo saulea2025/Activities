@@ -7,7 +7,8 @@ public class DatabaseConnector {
     private static final String USERNAME = "postgres";
     private static final String PASSWORD = "1234";
 
-    public static Connection getConnection() throws SQLException {
+    public static Connection getConnection() throws SQLException, ClassNotFoundException {
+        Class.forName("org.postgresql.Driver");
         return DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
     }
 

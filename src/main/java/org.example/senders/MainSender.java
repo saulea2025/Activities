@@ -4,6 +4,7 @@ public class MainSender {
 
     public static void start() {
         // Generate PDF report and send via email
+
         EmailSender emailSender = new EmailSender();
         emailSender.init();
 

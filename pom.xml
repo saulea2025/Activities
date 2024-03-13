@@ -52,14 +52,32 @@
       <artifactId>javax.mail-api</artifactId>
       <version>1.6.2</version>
     </dependency>
+    <!-- JavaMail API -->
+    <dependency>
+      <groupId>com.sun.mail</groupId>
+      <artifactId>javax.mail</artifactId>
+      <version>1.6.2</version>
+    </dependency>
     <!-- https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox -->
     <dependency>
       <groupId>org.apache.pdfbox</groupId>
       <artifactId>pdfbox</artifactId>
       <version>3.0.0</version>
     </dependency>
+    <!-- Telegram Bots API -->
+    <dependency>
+      <groupId>org.telegram</groupId>
+      <artifactId>telegrambots</artifactId>
+      <version>6.8.0</version>
+    </dependency>
+    <!-- Java Activation Framework -->
+    <dependency>
+      <groupId>javax.activation</groupId>
+      <artifactId>activation</artifactId>
+      <version>1.1.1</version>
+    </dependency>
   </dependencies>
   <build>
-    <finalName>Activities</finalName><plugins><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId><configuration><source>8</source><target>8</target></configuration></plugin></plugins>
+    <finalName>Activities</finalName>
   </build>
 </project>

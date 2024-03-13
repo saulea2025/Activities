@@ -20,7 +20,7 @@ public class TelegramSender extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return "services.TomcatReportBot";
+        return "org.example.senders.TelegramSender";
     }
 
     @Override
@@ -39,7 +39,8 @@ public class TelegramSender extends TelegramLongPollingBot {
 
             // Send the PDF to Telegram
             SendDocument sendDocument = new SendDocument();
-            sendDocument.setChatId(chatId);
+            //sendDocument.setChatId(chatId);
+            sendDocument.setChatId("1389023654");
             sendDocument.setDocument(new InputFile(new ByteArrayInputStream(outputStream.toByteArray()), "report.pdf"));
 
             execute(sendDocument); // Send to the chat ID retrieved from services.TelegramRetriever
