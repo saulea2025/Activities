@@ -1,34 +1,66 @@
 package org.example.senders;
 
-import java.io.ByteArrayOutputStream;
-import java.util.Properties;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import javax.mail.Multipart;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMultipart;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
+import java.io.ByteArrayOutputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Properties;
 
 public class EmailSender {
 
-    public void run() {
-        // Generate PDF report
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        DataToPdf.generatePdfFromResultSet(outputStream);
+    private Connection connection; // Assuming this is initialized elsewhere
 
-        // Send PDF report via email
-        sendEmailWithAttachment("saule.anafinova@gmail.com", "PDF Report", "Please find attached the PDF report.", "report.pdf", outputStream);
-        // Send PDF report via email to the second email address
-        //sendEmailWithAttachment("alenachzhen1999@gmail.com", "PDF Report", "Please find attached the PDF report.", "report.pdf", outputStream);
+    public EmailSender() {
+        // Get the connection from DatabaseConnector
+        try {
+            this.connection =                                                   DatabaseConnector.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void sendEmailWithAttachment(String to, String subject, String body, String attachmentFilename, ByteArrayOutputStream outputStream) {
+    public void run() {
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            // Prepare SQL query to retrieve email addresses from the database
+            String query = "SELECT email FROM person";
+            statement = connection.prepareStatement(query);
+            resultSet = statement.executeQuery();
+
+            // Iterate through the result set and send email to each recipient
+            while (resultSet.next()) {
+                String recipientEmail = resultSet.getString("email");
+                sendEmailWithAttachment(recipientEmail, "PDF Report", "Please find attached the PDF report.", "report.pdf");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // Close resources in finally block
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void sendEmailWithAttachment(String to, String subject, String body, String attachmentFilename) {
         // Sender's email ID needs to be mentioned
         String from = "saule.anafinova@gmail.com"; // Update with your email
 
@@ -78,6 +110,8 @@ public class EmailSender {
 
             // Part two is attachment
             messageBodyPart = new MimeBodyPart();
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            DataToPdf.generatePdfFromResultSet(outputStream); // You need to implement this method
             DataSource source = new ByteArrayDataSource(outputStream.toByteArray(), "application/pdf");
             messageBodyPart.setDataHandler(new DataHandler(source));
             messageBodyPart.setFileName(attachmentFilename);
@@ -88,7 +122,7 @@ public class EmailSender {
 
             // Send message
             Transport.send(message);
-            System.out.println("Email sent successfully...");
+            System.out.println("Email sent successfully to " + to);
         } catch (MessagingException mex) {
             mex.printStackTrace();
         }

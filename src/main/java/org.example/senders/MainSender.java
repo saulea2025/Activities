@@ -1,15 +1,16 @@
 package org.example.senders;
 
 public class MainSender {
-
-    public static void start() {
-        // Generate PDF report and send via email
-
+    public static void main(String[] args) {
+        // Initialize EmailSender
         EmailSender emailSender = new EmailSender();
+        // Call method to send emails
         emailSender.run();
 
-        // Start Telegram bot to send PDF report
-        TelegramSender bot = new TelegramSender();
-        bot.run();
+        // Initialize TelegramSender
+        TelegramSender telegramSender = new TelegramSender();
+        // Call method to send Telegram messages
+        telegramSender.run();
     }
 }
+
