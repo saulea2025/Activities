@@ -17,9 +17,8 @@ import java.util.List;
 
 public class DataToPdf {
     public static void generatePdfFromResultSet(OutputStream outputStream) {
-        int personId = 1; // Need to reassign, currently static for testing
-        List<ScheduleForPDF> schedules = ScheduleDB.getSchedulesForPerson(personId);
-        Person person = PersonDB.getById(personId);
+        List<ScheduleForPDF> schedules = ScheduleDB.getSchedule();
+       // Person person = PersonDB.getById(personId);
         try (PDDocument document = new PDDocument()) {
             PDPage page = new PDPage();
             document.addPage(page);
@@ -39,7 +38,8 @@ public class DataToPdf {
             contentStream.setNonStrokingColor(Color.BLACK);
             contentStream.beginText();
             contentStream.newLineAtOffset(50, page.getMediaBox().getHeight() - 10);
-            contentStream.showText("Schedule for: " + person.getName()); // Assuming getName() retrieves person's name
+            contentStream.showText("Schedule for everyone");
+            //contentStream.showText("Schedule for: " + person.getName()); // Assuming getName() retrieves person's name
             contentStream.endText();
 
             // Set table lines and borders color

@@ -47,7 +47,7 @@ public class ScheduleDB {
         }
         return 0;
     }
-    public static List<ScheduleForPDF> getSchedulesForPerson(int personId) {
+    /*public static List<ScheduleForPDF> getSchedulesForPerson(int personId) {
         List<ScheduleForPDF> schedules = new ArrayList<>();
         try{
             Class.forName("org.postgresql.Driver");
@@ -64,6 +64,33 @@ public class ScheduleDB {
                         String priority = resultSet.getString(3);
                         String status = resultSet.getString(4);
 
+                        ScheduleForPDF schedule = new ScheduleForPDF(time, activityName, priority, status);
+                        schedules.add(schedule);
+                    }
+
+                }
+            }
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+        }
+        return schedules;
+    }*/
+    public static List<ScheduleForPDF> getSchedule() {
+        List<ScheduleForPDF> schedules = new ArrayList<>();
+        try{
+            Class.forName("org.postgresql.Driver");
+            try (Connection conn = DriverManager.getConnection(url, username, password)){
+                conn.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
+                String sql = "SELECT date, activity.name, activity.priority, activity.status from schedule " +
+                        "left join activity on schedule.activity_id=activity.id";
+                try(PreparedStatement preparedStatement = conn.prepareStatement(sql)){
+                    ResultSet resultSet = preparedStatement.executeQuery();
+                    while (resultSet.next()) {
+                        Timestamp time = resultSet.getTimestamp(1);
+                        String activityName = resultSet.getString(2);
+                        String priority = resultSet.getString(3);
+                        String status = resultSet.getString(4);
                         ScheduleForPDF schedule = new ScheduleForPDF(time, activityName, priority, status);
                         schedules.add(schedule);
                     }
