@@ -111,4 +111,32 @@ public class PersonDB {
         }
         return telegram;
     }
+    public static Person select(int id) {
+        Person person = null;
+        try{
+            Class.forName("org.postgresql.Driver");
+            try (Connection conn = DriverManager.getConnection(url, username, password)){
+                conn.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
+                String sql = "select * from person where id=?";
+                try(PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
+                    preparedStatement.setInt(1, id);
+                    ResultSet resultSet = preparedStatement.executeQuery();
+                    while (resultSet.next()) {
+                        int personId = resultSet.getInt(1);
+                        String name = resultSet.getString(2);
+                        String surname = resultSet.getString(3);
+                        String role = resultSet.getString(4);
+                        String email = resultSet.getString(5);
+                        String telegram = resultSet.getString(6);
+                        String password = resultSet.getString(7);
+                        person = new Person(personId, name, surname, role, email, telegram, password);
+                    }
+                }
+            }
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+        }
+        return person;
+    }
 }

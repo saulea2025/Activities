@@ -1,11 +1,10 @@
 package org.example.servlets;
 
 import com.google.gson.Gson;
+import org.example.DAO.ActivityDB;
 import org.example.DAO.PersonDB;
 import org.example.DAO.ScheduleDB;
-import org.example.DTO.ActivityDTO;
-import org.example.DTO.IdDTO;
-import org.example.DTO.PersonDTO;
+import org.example.DTO.*;
 import org.example.models.Person;
 
 import javax.servlet.ServletException;
@@ -27,6 +26,11 @@ public class LoginServlet extends HttpServlet {
         if(personOptional.isPresent()) {
             HttpSession session = request.getSession();
             session.setAttribute("person", personOptional.get());
+            Person person = PersonDB.select(personOptional.get().getId());
+            String json = new Gson().toJson(person);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(json);
             response.setStatus(200);
         }
         else {
