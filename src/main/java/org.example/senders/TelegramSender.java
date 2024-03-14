@@ -1,5 +1,6 @@
 package org.example.senders;
 
+import org.example.DAO.DatabaseConnector;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
@@ -65,6 +66,8 @@ public class TelegramSender extends TelegramLongPollingBot {
             }
         } catch (SQLException | TelegramApiException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         } finally {
             // Close resources in finally block
             try {

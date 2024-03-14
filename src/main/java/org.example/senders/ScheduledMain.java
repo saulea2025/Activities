@@ -29,7 +29,7 @@ public class ScheduledMain {
             @Override
             public void run() {
                 // Execute the main class
-                MainSender.start();
+                MainSender.main();
             }
         }, calendar.getTime());
     }

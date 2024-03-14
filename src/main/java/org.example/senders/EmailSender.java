@@ -1,5 +1,7 @@
 package org.example.senders;
 
+import org.example.DAO.DatabaseConnector;
+
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.mail.*;
@@ -22,8 +24,8 @@ public class EmailSender {
     public EmailSender() {
         // Get the connection from DatabaseConnector
         try {
-            this.connection =                                                   DatabaseConnector.getConnection();
-        } catch (SQLException e) {
+            this.connection = DatabaseConnector.getConnection();
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

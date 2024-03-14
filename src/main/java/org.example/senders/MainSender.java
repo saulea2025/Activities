@@ -1,7 +1,7 @@
 package org.example.senders;
 
 public class MainSender {
-    public static void main(String[] args) {
+    public static void main() {
         // Initialize EmailSender
         EmailSender emailSender = new EmailSender();
         // Call method to send emails
