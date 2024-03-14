@@ -32,7 +32,7 @@ public class ActivityDB {
         password = propertiesDB.getProperty("password");
 
     }
-    public static List<PersonActivityDTO> select() {
+    public List<PersonActivityDTO> select() {
 
         List<PersonActivityDTO> activities = new ArrayList<PersonActivityDTO>();
         try{
@@ -62,7 +62,7 @@ public class ActivityDB {
         }
         return activities;
     }
-    public static int add(ActivityDTO activityDTO) {
+    public int add(ActivityDTO activityDTO) {
         try{
             Class.forName("org.postgresql.Driver");
             try (Connection conn = DriverManager.getConnection(url, username, password)){
@@ -127,8 +127,8 @@ public class ActivityDB {
             System.out.println(ex);
         }
     }
-    public static void changeStatus(int activityId, String status) {
-
+    public int changeStatus(int activityId, String status) {
+        int chanchedRows = 0;
         try{
             Class.forName("org.postgresql.Driver");
             try (Connection conn = DriverManager.getConnection(url, username, password)){
@@ -137,12 +137,14 @@ public class ActivityDB {
                 try(PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
                     preparedStatement.setString(1, status);
                     preparedStatement.setInt(2, activityId);
-                    preparedStatement.executeUpdate();
+                    chanchedRows = preparedStatement.executeUpdate();
+
                 }
             }
         }
         catch(Exception ex){
             System.out.println(ex);
         }
+        return chanchedRows;
     }
 }

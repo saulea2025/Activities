@@ -5,8 +5,11 @@ import org.example.DAO.ActivityDB;
 import org.example.DTO.ActivityDTO;
 import org.example.DTO.PersonActivityDTO;
 import org.example.DTO.PersonActivityWithRoleDTO;
+import org.example.DTO.PersonDTO;
 import org.example.models.Person;
+import org.example.services.ActivitiesService;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,9 +20,17 @@ import java.util.List;
 
 @WebServlet(name = "activities", value = "/activities")
 public class ActivitiesServlet extends HttpServlet {
+    private ActivitiesService activitiesService;
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        activitiesService = new ActivitiesService(new ActivityDB());
+    }
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
-        List<PersonActivityDTO> activities = ActivityDB.select();
+        List<PersonActivityDTO> activities = activitiesService.getActivities();
         PersonActivityWithRoleDTO activitiesAndRole= new PersonActivityWithRoleDTO(getRole(request), activities);
         String json = new Gson().toJson(activitiesAndRole);
         response.setContentType("application/json");
@@ -30,7 +41,7 @@ public class ActivitiesServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         ActivityDTO activityDTO = new Gson().fromJson(request.getReader(), ActivityDTO.class);
-        ActivityDB.add(activityDTO);
+        activitiesService.addActivity(activityDTO);
         response.setStatus(200);
     }
     private String getRole(HttpServletRequest request){
