@@ -9,33 +9,29 @@ import java.io.IOException;
 @WebFilter(urlPatterns = "/*")
 public class CorsFilter implements Filter {
 
-    public CorsFilter() {
-    }
-
-    public void destroy() {
-    }
-
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain)
             throws IOException, ServletException {
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        System.out.println("CORSFilter HTTP Request: " + request.getMethod());
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        // Authorize (allow) all domains to consume the content
-        ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Origin", "*");
-        ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Methods","GET, OPTIONS, HEAD, PUT, POST");
-        ((HttpServletResponse) servletResponse).addHeader("Access-Control-Allow-Headers", "*");
-        HttpServletResponse resp = (HttpServletResponse) servletResponse;
 
-        // pass the request along the filter chain
-        chain.doFilter(request, servletResponse);
+        response.setHeader("Access-Control-Allow-Origin", "*");
+
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+
+        response.setHeader("Access-Control-Allow-Headers", "origin, content-type, accept, authorization");
+
+        response.setHeader("Access-Control-Max-Age", "3600");
+
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            response.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            chain.doFilter(request, response);
+        }
     }
 
-    /**
-     * @see Filter#init(FilterConfig)
-     */
-    public void init(FilterConfig fConfig) throws ServletException {
-        // TODO Auto-generated method stub
-    }
+    public void destroy() {}
 
+    public void init(FilterConfig fConfig) throws ServletException {}
 }
