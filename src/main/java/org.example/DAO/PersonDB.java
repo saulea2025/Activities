@@ -32,7 +32,7 @@ public class PersonDB {
         password = propertiesDB.getProperty("password");
 
     }
-    public static Optional<Person> findByEmailAndPassword(String userEmail, String userPassword) {
+    public Optional<Person> findByEmailAndPassword(String userEmail, String userPassword) {
         Optional<Person> personOptional = Optional.empty();
         try{
             Class.forName("org.postgresql.Driver");

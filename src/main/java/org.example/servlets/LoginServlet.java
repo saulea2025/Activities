@@ -6,6 +6,7 @@ import org.example.DAO.PersonDB;
 import org.example.DAO.ScheduleDB;
 import org.example.DTO.*;
 import org.example.models.Person;
+import org.example.services.LoginService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,10 +20,18 @@ import java.util.Optional;
 
 @WebServlet(name = "login", value = "/login")
 public class LoginServlet extends HttpServlet {
+    private LoginService loginService;
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        loginService = new LoginService(new PersonDB());
+    }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         PersonDTO personDTO = new Gson().fromJson(request.getReader(), PersonDTO.class);
-        Optional<Person> personOptional = PersonDB.findByEmailAndPassword(personDTO.getEmail(), personDTO.getPassword());
+        Optional<Person> personOptional = loginService.getPerson(personDTO);
         if(personOptional.isPresent()) {
             HttpSession session = request.getSession();
             session.setAttribute("person", personOptional.get());
