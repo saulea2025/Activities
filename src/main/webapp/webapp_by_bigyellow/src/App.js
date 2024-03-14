@@ -47,7 +47,7 @@ class App extends Component {
     }
 
     handleUserPage = () => {
-        fetch('http://localhost:8080/Activities_war_exploded/users', {mode:'no-cors'})
+        fetch('http://localhost:8080/Activities_war_exploded/users')
             .then(response => {
                 if (response.ok) {
                     return response.json();
@@ -56,9 +56,11 @@ class App extends Component {
                 }
             })
             .then(data => {
-
+                // Обработка полученных данных
                 console.log('User data:', data);
-
+                // Пример: обновление состояния приложения с полученными данными
+                // this.setState({ userData: data });
+                // Другие действия в зависимости от полученных данных
             })
             .catch(error => console.error('Error fetching user data:', error));
     }
