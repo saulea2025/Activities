@@ -22,7 +22,7 @@ public class EmailSender {
     public EmailSender() {
         // Get the connection from DatabaseConnector
         try {
-            this.connection =                                                   DatabaseConnector.getConnection();
+            this.connection = DatabaseConnector.getConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
