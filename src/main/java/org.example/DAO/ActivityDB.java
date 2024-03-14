@@ -81,7 +81,7 @@ public class ActivityDB {
         }
         return 0;
     }
-    public static List<ActivityDTO> selectByPerson(int personId) {
+    public List<ActivityDTO> selectByPerson(int personId) {
 
         List<ActivityDTO> activities = new ArrayList<ActivityDTO>();
         try{
@@ -109,8 +109,8 @@ public class ActivityDB {
         }
         return activities;
     }
-    public static void setPersonForActivity(int activityId, int personId) {
-
+    public int setPersonForActivity(int activityId, int personId) {
+        int chanchedRows = 0;
         try{
             Class.forName("org.postgresql.Driver");
             try (Connection conn = DriverManager.getConnection(url, username, password)){
@@ -119,13 +119,14 @@ public class ActivityDB {
                 try(PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
                     preparedStatement.setInt(1, personId);
                     preparedStatement.setInt(2, activityId);
-                    preparedStatement.executeUpdate();
+                    chanchedRows = preparedStatement.executeUpdate();
                 }
             }
         }
         catch(Exception ex){
             System.out.println(ex);
         }
+        return chanchedRows;
     }
     public int changeStatus(int activityId, String status) {
         int chanchedRows = 0;

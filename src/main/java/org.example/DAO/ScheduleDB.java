@@ -28,7 +28,7 @@ public class ScheduleDB {
         password = propertiesDB.getProperty("password");
 
     }
-    public static int add(int activityId, int personId) {
+    public int add(int activityId, int personId) {
         try{
             Class.forName("org.postgresql.Driver");
             try (Connection conn = DriverManager.getConnection(url, username, password)){

@@ -6,10 +6,10 @@ import org.example.models.Person;
 
 import java.util.Optional;
 
-public class LoginService {
+public class PersonService {
     private PersonDB personDB;
 
-    public LoginService(PersonDB personDB) {
+    public PersonService(PersonDB personDB) {
         this.personDB = personDB;
     }
 

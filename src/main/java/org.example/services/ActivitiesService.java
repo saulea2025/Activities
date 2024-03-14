@@ -26,4 +26,12 @@ public class ActivitiesService {
     public int changeStatus(int activityId, String status){
         return activityDB.changeStatus(activityId, status);
     }
+
+    public int setPersonForActivity(int activityId, int personId) {
+        return activityDB.setPersonForActivity(activityId, personId);
+    }
+
+    public List<ActivityDTO> selectByPerson(int personId) {
+        return activityDB.selectByPerson(personId);
+    }
 }
