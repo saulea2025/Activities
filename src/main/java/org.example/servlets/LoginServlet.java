@@ -34,17 +34,14 @@ public class LoginServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ScheduledMain.scheduleExecution(22, 53);
-
-
         PersonDTO personDTO = new Gson().fromJson(request.getReader(), PersonDTO.class);
         Optional<Person> personOptional = personService.getPerson(personDTO);
         if(personOptional.isPresent()) {
             HttpSession session = request.getSession();
             session.setAttribute("person", personOptional.get());
             Person person = PersonDB.select(personOptional.get().getId());
-            //addJWT(person, response);
-            String json = new Gson().toJson(person);
+            PersonWithTokenDTO personWithTokenDTO = new PersonWithTokenDTO(person, generateJWT(person.getEmail()));
+            String json = new Gson().toJson(personWithTokenDTO);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(json);
@@ -54,14 +51,13 @@ public class LoginServlet extends HttpServlet {
             response.setStatus(401);
         }
     }
-/*    private void addJWT(Person person, HttpServletResponse response) throws IOException {
-        SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    private String generateJWT(String email) throws IOException {
+        //SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
         String token = Jwts.builder()
-                .setSubject(person.getEmail()) // Используем email как subject токена
-                .signWith(key) // Подписываем токен секретным ключом
+                .setSubject(email) // Используем email как subject токена
+                .signWith(SignatureAlgorithm.HS256, "your-secret-key-your-secret-key-your-secret-key".getBytes(StandardCharsets.UTF_8)) // Подписываем токен секретным ключом
                 .compact();
-        System.out.println(token);
-        response.setContentType("application/json");
-        response.getWriter().write(token);
-    }*/
+        return token;
+    }
+
 }
