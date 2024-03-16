@@ -15,7 +15,7 @@ import static java.util.Objects.nonNull;
 @WebFilter("/*")
 public class AccessFilter implements Filter {
     private static final List<String> AUTHORIZED_ALLOWED_PAGES = Arrays.asList("/login", "/logout", "/users", "/activities");
-    private static final List<String> UNAUTHORIZED_ALLOWED_PAGES = Collections.singletonList("/login");
+    private static final List<String> UNAUTHORIZED_ALLOWED_PAGES = Arrays.asList("/login", "/logout", "/users", "/activities");
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
