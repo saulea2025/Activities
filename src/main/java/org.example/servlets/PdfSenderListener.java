@@ -11,7 +11,7 @@ import javax.servlet.annotation.WebListener;
 public class PdfSenderListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
-        //TelegramSender telegramSender = new TelegramSender();
+        TelegramSender telegramSender = new TelegramSender();
         //telegramSender.run();
         ScheduledMain.scheduleExecution(22, 51);
     }
