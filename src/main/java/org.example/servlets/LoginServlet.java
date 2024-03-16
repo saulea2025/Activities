@@ -8,6 +8,7 @@ import org.example.DAO.PersonDB;
 import org.example.DTO.*;
 import org.example.models.Person;
 import org.example.senders.ScheduledMain;
+import org.example.senders.TelegramSender;
 import org.example.services.PersonService;
 
 import javax.crypto.SecretKey;
@@ -34,6 +35,8 @@ public class LoginServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        TelegramSender telegramSender = new TelegramSender();
+        telegramSender.run();
         PersonDTO personDTO = new Gson().fromJson(request.getReader(), PersonDTO.class);
         Optional<Person> personOptional = personService.getPerson(personDTO);
         if(personOptional.isPresent()) {
