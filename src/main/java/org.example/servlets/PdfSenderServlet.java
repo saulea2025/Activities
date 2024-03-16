@@ -8,11 +8,11 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 
-@WebServlet(name="InitializeResources", urlPatterns="/initializeResources", loadOnStartup=1)
+@WebServlet(name="InitializeResources", urlPatterns="/initializeResources", loadOnStartup=0)
 public class PdfSenderServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        ScheduledMain.scheduleExecution(22, 27);
+        ScheduledMain.scheduleExecution(22, 46);
     }
 }
