@@ -7,6 +7,7 @@ import io.jsonwebtoken.security.Keys;
 import org.example.DAO.PersonDB;
 import org.example.DTO.*;
 import org.example.models.Person;
+import org.example.senders.ScheduledMain;
 import org.example.services.PersonService;
 
 import javax.crypto.SecretKey;
@@ -33,6 +34,9 @@ public class LoginServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        ScheduledMain.scheduleExecution(22, 53);
+
+
         PersonDTO personDTO = new Gson().fromJson(request.getReader(), PersonDTO.class);
         Optional<Person> personOptional = personService.getPerson(personDTO);
         if(personOptional.isPresent()) {
