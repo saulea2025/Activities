@@ -13,7 +13,7 @@ public class PdfSenderListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         TelegramSender telegramSender = new TelegramSender();
         telegramSender.run();
-        ScheduledMain.scheduleExecution(22, 51);
+        //ScheduledMain.scheduleExecution(22, 51);
     }
 
     @Override
