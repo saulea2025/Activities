@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./App.css"; // Подключаем файл стилей
 
 class App extends Component {
     constructor(props) {
@@ -33,7 +34,7 @@ class App extends Component {
             body: JSON.stringify(userData)
         };
 
-        fetch('http://localhost:8080/Activities_war_exploded/login', requestOptions)
+        fetch('http://localhost:8080/login', requestOptions)
             .then(response => {
                 if (response.ok) {
                     this.setState({
@@ -47,7 +48,7 @@ class App extends Component {
     }
 
     handleUserPage = () => {
-        fetch('http://localhost:8080/Activities_war_exploded/users', {mode:'no-cors'})
+        fetch('http://localhost:8080/users', {mode:'no-cors'})
             .then(response => {
                 if (response.ok) {
                     return response.json();
@@ -56,9 +57,7 @@ class App extends Component {
                 }
             })
             .then(data => {
-
                 console.log('User data:', data);
-
             })
             .catch(error => console.error('Error fetching user data:', error));
     }
@@ -76,18 +75,17 @@ class App extends Component {
 
         if (isLoggedIn) {
             return (
-                <div>
+                <div className="container">
                     <p>You are successfully logged in!</p>
-                    <button onClick={this.handleUserPage}>Go to the User page</button>
-
+                    <button className="user-page-btn" onClick={this.handleUserPage}>Go to the User page</button>
                     <div>
-                        <button onClick={this.handleLogout}>Logout</button>
+                        <button className="logout-btn" onClick={this.handleLogout}>Logout</button>
                     </div>
                 </div>
             );
         } else {
             return (
-                <div>
+                <div className="container">
                     <h2>Welcome to our website</h2>
                     <p>To continue, please login:</p>
                     <form>
@@ -99,7 +97,7 @@ class App extends Component {
                             <label>Password:</label>
                             <input type="password" name="password" onChange={this.handleInputChange} />
                         </div>
-                        <button type="button" onClick={this.handleLogin}>Login</button>
+                        <button className="login-btn" type="button" onClick={this.handleLogin}>Login</button>
                     </form>
                 </div>
             );
