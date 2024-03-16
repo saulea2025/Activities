@@ -10,7 +10,7 @@ import javax.servlet.annotation.WebListener;
 public class PdfSenderListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
-        ScheduledMain.scheduleExecution(22, 22);
+        ScheduledMain.scheduleExecution(22, 30);
     }
 
     @Override
