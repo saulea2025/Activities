@@ -1,7 +1,5 @@
 package org.example.senders;
 
-import org.example.DAO.DatabaseConnector;
-
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.mail.*;
@@ -25,7 +23,7 @@ public class EmailSender {
         // Get the connection from DatabaseConnector
         try {
             this.connection = DatabaseConnector.getConnection();
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -64,7 +62,7 @@ public class EmailSender {
 
     public void sendEmailWithAttachment(String to, String subject, String body, String attachmentFilename) {
         // Sender's email ID needs to be mentioned
-        String from = "postgres75@gmail.com"; // Update with your email
+        String from = "saule.anafinova@gmail.com"; // Update with your email
 
         // Assuming you are sending email from Gmail
         String host = "smtp.gmail.com";
@@ -81,7 +79,7 @@ public class EmailSender {
         // Get the default Session object.
         Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
             protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
-                return new javax.mail.PasswordAuthentication("postgres75@gmail.com", "bnka ikby ctpz phiq"); // Update with your email and password
+                return new javax.mail.PasswordAuthentication("saule.anafinova@gmail.com", "ypdu pvjj ifib hkfq"); // Update with your email and password
             }
         });
 
