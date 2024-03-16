@@ -33,6 +33,7 @@ public class AccessFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
         String path = httpRequest.getServletPath();
         HttpSession session = httpRequest.getSession();
+        System.out.println("filter");
 
 /*        try {
             String token = httpRequest.getHeader("Authorization");
@@ -58,10 +59,12 @@ public class AccessFilter implements Filter {
 
 
         if (nonNull(session.getAttribute("person")) && (AUTHORIZED_ALLOWED_PAGES.contains(path) || path.startsWith("/activities/") || path.startsWith("/users/"))){
+            System.out.println("authorized");
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
         else {
+            System.out.println("not authorized");
             if(UNAUTHORIZED_ALLOWED_PAGES.contains(path)) {
                 filterChain.doFilter(servletRequest, servletResponse);
                 return;
