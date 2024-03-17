@@ -87,6 +87,13 @@
       <artifactId>fontbox</artifactId>
       <version>3.0.0</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.apache.pdfbox/jempbox -->
+    <dependency>
+      <groupId>org.apache.pdfbox</groupId>
+      <artifactId>jempbox</artifactId>
+      <version>1.8.17</version>
+    </dependency>
+
 
     <!-- Telegram Bots API -->
     <dependency>
