@@ -1,5 +1,7 @@
 package org.example.senders;
 
+import org.apache.fontbox.FontBoxFont;
+import org.apache.fontbox.util.autodetect.FontDirFinder;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -13,6 +15,7 @@ import org.example.models.Person;
 import org.example.models.ScheduleForPDF;
 
 import java.awt.Color;
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
@@ -25,6 +28,7 @@ public class DataToPdf {
             PDPage page = new PDPage();
             document.addPage(page);
             PDPageContentStream contentStream = new PDPageContentStream(document, page);
+
 
             //Standard14Fonts.FontName fontName = Standard14Fonts.FontName.SYMBOL;
             PDFont pdFont = new PDType1Font(Standard14Fonts.FontName.TIMES_ROMAN);
