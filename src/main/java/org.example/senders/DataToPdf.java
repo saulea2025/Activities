@@ -3,7 +3,6 @@ package org.example.senders;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
@@ -27,7 +26,7 @@ public class DataToPdf {
             PDPageContentStream contentStream = new PDPageContentStream(document, page);
 
             Standard14Fonts.FontName fontName = Standard14Fonts.getMappedFontName("HELVETICA_BOLD");
-            PDFont pdFont = new PDType1Font(fontName);
+            PDType1Font pdFont = new PDType1Font(fontName);
             contentStream.setFont(pdFont, 10);
 
             // Set background color
