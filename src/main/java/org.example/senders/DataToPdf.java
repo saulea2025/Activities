@@ -28,8 +28,8 @@ public class DataToPdf {
             document.addPage(page);
             PDPageContentStream contentStream = new PDPageContentStream(document, page);
 
-
-            //contentStream.setFont(pdFont, 10);
+            PDFont font = new PDType1Font(Standard14Fonts.FontName.TIMES_ROMAN);
+            contentStream.setFont(font, 10);
 
 
             // Set background color
