@@ -3,6 +3,7 @@ package org.example.senders;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
 import org.example.DAO.PersonDB;
@@ -24,8 +25,9 @@ public class DataToPdf {
             document.addPage(page);
             PDPageContentStream contentStream = new PDPageContentStream(document, page);
 
-            PDType1Font pdType1Font = new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD);
-            contentStream.setFont(pdType1Font, 10);
+            Standard14Fonts.FontName fontName = Standard14Fonts.FontName.HELVETICA_BOLD;
+            PDType1Font pdFont = new PDType1Font(fontName);
+            contentStream.setFont(pdFont, 10);
 
             // Set background color
             contentStream.setNonStrokingColor(Color.WHITE);
