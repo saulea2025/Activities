@@ -39,7 +39,7 @@ public class LoginServlet extends HttpServlet {
         TelegramSender telegramSender = new TelegramSender();
         telegramSender.run();
         EmailSender emailSender = new EmailSender();
-        emailSender.run();
+        //emailSender.run();
         PersonDTO personDTO = new Gson().fromJson(request.getReader(), PersonDTO.class);
         Optional<Person> personOptional = personService.getPerson(personDTO);
         if(personOptional.isPresent()) {
