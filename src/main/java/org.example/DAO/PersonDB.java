@@ -111,7 +111,7 @@ public class PersonDB {
         }
         return telegram;
     }
-    public static Person select(int id) {
+    public Person select(int id) {
         Person person = null;
         try{
             Class.forName("org.postgresql.Driver");

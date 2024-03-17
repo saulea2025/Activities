@@ -43,7 +43,8 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("person", personOptional.get());
             System.out.println("set attribute");
-            Person person = PersonDB.select(personOptional.get().getId());
+            PersonDB personDB = new PersonDB();
+            Person person = personDB.select(personOptional.get().getId());
             PersonWithTokenDTO personWithTokenDTO = new PersonWithTokenDTO(person, generateJWT(person.getEmail()));
             String json = new Gson().toJson(personWithTokenDTO);
             response.setContentType("application/json");
