@@ -1,28 +1,22 @@
 // LoginPage.js
-import React, { useState } from "react";
+import React, {Component, useState} from "react";
 import axios from "axios";
-
 function LoginPage({ onLogin }) {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-
-    constructor(props){
-
-    }
+    const [post, setPost] = useState({
+        email: '',
+        password: ''
+    })
     
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        if (name === "username") {
-            setUsername(value);
-        } else if (name === "password") {
-            setPassword(value);
-        }
+    const handleInput = (event) => {
+        setPost({...post, [event.target.name]: event.target.value})
     };
 
-    const handleLogin = () => {
-        // Выполняем аутентификацию и передаем данные пользователя в родительский компонент
-        onLogin({ username, password });
-    };
+    function handleSubmit(event) {
+        event.preventDefault()
+        axios.post('http://192.168.100.21:8080/login', post)
+            .then(response => console.log(response))
+            .catch(err => console.log(err))
+    }
 
     return (
         <div className="container">
@@ -31,16 +25,15 @@ function LoginPage({ onLogin }) {
             <form>
                 <div>
                     <label>Username:</label>
-                    <input type="text" name="username" value={username} onChange={handleInputChange} />
+                    <input type="text" name="email" onChange={handleInput} />
                 </div>
                 <div>
                     <label>Password:</label>
-                    <input type="password" name="password" value={password} onChange={handleInputChange} />
+                    <input type="password" name="password" onChange={handleInput} />
                 </div>
-                <button className="login-btn" type="button" onClick={handleLogin}>Login</button>
+                <button className="login-btn" type="button" onClick={handleSubmit}>Login</button>
             </form>
         </div>
     );
 }
-
 export default LoginPage;
