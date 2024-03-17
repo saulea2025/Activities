@@ -5,10 +5,7 @@ import org.apache.fontbox.util.autodetect.FontDirFinder;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.font.PDFont;
-import org.apache.pdfbox.pdmodel.font.PDType0Font;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
-import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
+import org.apache.pdfbox.pdmodel.font.*;
 import org.example.DAO.PersonDB;
 import org.example.DAO.ScheduleDB;
 import org.example.models.Person;
@@ -29,8 +26,9 @@ public class DataToPdf {
             document.addPage(page);
             PDPageContentStream contentStream = new PDPageContentStream(document, page);
 
-            //PDFont pdFont = new PDType1Font(Standard14Fonts.FontName.TIMES_ROMAN);
-            //contentStream.setFont(pdFont, 10);
+            PDFont pdFont = new PDType1Font(Standard14Fonts.FontName.TIMES_ROMAN);
+            contentStream.setFont(pdFont, 10);
+
 
             // Set background color
             contentStream.setNonStrokingColor(Color.WHITE);
