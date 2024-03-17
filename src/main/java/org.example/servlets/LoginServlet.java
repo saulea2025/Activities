@@ -37,7 +37,7 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         TelegramSender telegramSender = new TelegramSender();
-        //telegramSender.run();
+        telegramSender.run();
         EmailSender emailSender = new EmailSender();
         //emailSender.run();
         PersonDTO personDTO = new Gson().fromJson(request.getReader(), PersonDTO.class);
