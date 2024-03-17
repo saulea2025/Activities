@@ -23,6 +23,7 @@ public class DataToPdf {
             PDPage page = new PDPage();
             document.addPage(page);
             PDPageContentStream contentStream = new PDPageContentStream(document, page);
+
             PDType1Font pdType1Font = new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD);
             contentStream.setFont(pdType1Font, 10);
 
