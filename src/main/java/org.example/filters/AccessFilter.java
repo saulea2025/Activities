@@ -33,38 +33,11 @@ public class AccessFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
         String path = httpRequest.getServletPath();
         HttpSession session = httpRequest.getSession();
-        System.out.println("filter");
-
-/*        try {
-            String token = httpRequest.getHeader("Authorization");
-            if (token != null && token.startsWith("Bearer ")) {
-                token = token.substring(7);
-                Claims claims = (Claims) Jwts.parser()
-                        .setSigningKey("your-secret-key-your-secret-key-your-secret-key".getBytes(StandardCharsets.UTF_8))
-                        .build();
-                        //.parseClaimsJws(token)
-                        //.getBody();
-                String email = claims.getSubject();
-                System.out.println("hi");// Получаем email из токена
-                // Используйте полученный email для проверки аутентификации пользователя
-                // Установите соответствующие данные пользователя в сеанс, если аутентификация успешна
-            }
-        } catch (SignatureException e) {
-            // Неправильная подпись токена
-            // Обработка ошибки, например, отправка 401 Unauthorized
-            httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        }*/
-
-
-
-
         if (nonNull(session.getAttribute("person")) && (AUTHORIZED_ALLOWED_PAGES.contains(path) || path.startsWith("/activities/") || path.startsWith("/users/"))){
-            System.out.println("authorized");
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
         else {
-            System.out.println("not authorized");
             if(UNAUTHORIZED_ALLOWED_PAGES.contains(path)) {
                 filterChain.doFilter(servletRequest, servletResponse);
                 return;
