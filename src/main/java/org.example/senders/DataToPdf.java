@@ -26,7 +26,7 @@ public class DataToPdf {
             document.addPage(page);
             PDPageContentStream contentStream = new PDPageContentStream(document, page);
 
-            PDFont pdFont = new PDType1Font(Standard14Fonts.FontName.TIMES_ROMAN);
+            PDFont pdFont = new PDType1Font(Standard14Fonts.FontName.COURIER);
             contentStream.setFont(pdFont, 10);
 
 
