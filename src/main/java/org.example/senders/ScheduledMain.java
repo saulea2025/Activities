@@ -1,7 +1,5 @@
 package org.example.senders;
 
-
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
@@ -29,7 +27,7 @@ public class ScheduledMain {
             @Override
             public void run() {
                 // Execute the main class
-                MainSender.main();
+                MainSender.main(new String[]{});
             }
         }, calendar.getTime());
     }

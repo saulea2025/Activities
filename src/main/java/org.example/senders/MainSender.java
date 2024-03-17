@@ -1,7 +1,7 @@
 package org.example.senders;
 
 public class MainSender {
-    public static void main() {
+    public static void main(String[] args) {
         EmailSender emailSender = new EmailSender();
         emailSender.run();
 
@@ -9,4 +9,3 @@ public class MainSender {
         telegramSender.run();
     }
 }
-
