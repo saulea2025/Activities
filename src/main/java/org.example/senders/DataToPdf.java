@@ -32,8 +32,7 @@ public class DataToPdf {
 
             //Standard14Fonts.FontName fontName = Standard14Fonts.FontName.SYMBOL;
             PDFont pdFont = new PDType1Font(Standard14Fonts.FontName.TIMES_ROMAN);
-            contentStream.setFont(pdFont, 10);
-
+            //contentStream.setFont(pdFont, 10);
             // Set background color
             contentStream.setNonStrokingColor(Color.WHITE);
             contentStream.addRect(0, 0, page.getMediaBox().getWidth(), page.getMediaBox().getHeight());
