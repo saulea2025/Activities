@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const UsersPage = () => {
+const ActivitiesPage = () => {
     const [activities, setActivities] = useState([]);
     const [activityId, setActivityId] = useState('');
     const [loading, setLoading] = useState(false);
@@ -14,7 +14,7 @@ const UsersPage = () => {
     const fetchActivities = async () => {
         try {
             setLoading(true);
-            const response = await axios.get('http://192.168.100.21/users');
+            const response = await axios.get('/activities');
             setActivities(response.data);
         } catch (error) {
             console.error('Error fetching activities:', error);
@@ -23,11 +23,21 @@ const UsersPage = () => {
         }
     };
 
+    const handleActivitySubmit = async (e) => {
+        e.preventDefault();
+        try {
+            setLoading(true);
+            await axios.post('/users', { id: activityId });
+            // После успешного добавления можно обновить список активностей
+            fetchActivities();
+        } catch (error) {
+            console.error('Error adding activity:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-    return(
-        <div>Users page</div>
-    )
-    /*return (
+    return (
         <div>
             <h1>Users Activities</h1>
             {loading && <p>Loading...</p>}
@@ -48,7 +58,7 @@ const UsersPage = () => {
                 <button type="submit">Add Activity</button>
             </form>
         </div>
-    );*/
+    );
 };
 
-export default UsersPage;
+export default ActivitiesPage;
