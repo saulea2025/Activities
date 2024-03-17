@@ -1,37 +1,64 @@
-import React, { useState, useEffect } from "react";
+// UsersPage.js
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-function UserPage() {
-    const [userData, setUserData] = useState(null);
-    const [loading, setLoading] = useState(true);
+const UsersPage = () => {
+    const [activities, setActivities] = useState([]);
+    const [activityId, setActivityId] = useState('');
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        fetch('http://localhost:8080/users')
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error('Failed to fetch user data');
-                }
-            })
-            .then(data => {
-                setUserData(data);
-                setLoading(false);
-            })
-            .catch(error => console.error('Error fetching user data:', error));
+        fetchActivities();
     }, []);
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
+    const fetchActivities = async () => {
+        try {
+            setLoading(true);
+            const response = await axios.get('/users');
+            setActivities(response.data);
+        } catch (error) {
+            console.error('Error fetching activities:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleActivitySubmit = async (e) => {
+        e.preventDefault();
+        try {
+            setLoading(true);
+            await axios.post('/users', { id: activityId });
+            // После успешного добавления можно обновить список активностей
+            fetchActivities();
+        } catch (error) {
+            console.error('Error adding activity:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div>
-            <h2>User Information</h2>
-            <p><strong>Name:</strong> {userData.name}</p>
-            <p><strong>Email:</strong> {userData.email}</p>
-            {/* Дополнительная информация о пользователе, если необходимо */}
+            <h1>Users Activities</h1>
+            {loading && <p>Loading...</p>}
+            <ul>
+                {activities.map(activity => (
+                    <li key={activity.id}>{activity.name}</li>
+                ))}
+            </ul>
+            <form onSubmit={handleActivitySubmit}>
+                <label>
+                    Activity ID:
+                    <input
+                        type="text"
+                        value={activityId}
+                        onChange={(e) => setActivityId(e.target.value)}
+                    />
+                </label>
+                <button type="submit">Add Activity</button>
+            </form>
         </div>
     );
-}
+};
 
-export default UserPage;
+export default UsersPage;
