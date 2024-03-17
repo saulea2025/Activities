@@ -1,16 +1,20 @@
 package org.example.senders;
 
+import org.apache.fontbox.FontBoxFont;
+import org.apache.fontbox.ttf.TrueTypeFont;
+import org.apache.fontbox.util.autodetect.FontDirFinder;
+import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
-import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
+import org.apache.pdfbox.pdmodel.font.*;
 import org.example.DAO.PersonDB;
 import org.example.DAO.ScheduleDB;
 import org.example.models.Person;
 import org.example.models.ScheduleForPDF;
 
-import java.awt.Color;
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
@@ -23,7 +27,10 @@ public class DataToPdf {
             PDPage page = new PDPage();
             document.addPage(page);
             PDPageContentStream contentStream = new PDPageContentStream(document, page);
-            contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 10);
+
+            PDFont font = new PDType1Font(Standard14Fonts.FontName.TIMES_ROMAN);
+            contentStream.setFont(font, 10);
+
 
             // Set background color
             contentStream.setNonStrokingColor(Color.WHITE);

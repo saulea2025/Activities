@@ -12,26 +12,10 @@ import java.util.List;
 import java.util.Properties;
 
 public class ScheduleDB {
-    private static String url;
-    private static String username;
-    private static String password;
-    private static Properties propertiesDB;
-    static{
-        propertiesDB = new Properties();
-        try {
-            propertiesDB.load(ActivityDB.class.getClassLoader().getResourceAsStream("database.properties"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        url = propertiesDB.getProperty("url");
-        username = propertiesDB.getProperty("username");
-        password = propertiesDB.getProperty("password");
-
-    }
     public int add(int activityId, int personId) {
         try{
             Class.forName("org.postgresql.Driver");
-            try (Connection conn = DriverManager.getConnection(url, username, password)){
+            try (Connection conn = DatabaseConnector.getConnection()){
                 conn.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
                 String sql = "INSERT INTO schedule (activity_id, person_id, date) Values (?, ?, ?)";
                 try(PreparedStatement preparedStatement = conn.prepareStatement(sql)){
@@ -80,7 +64,7 @@ public class ScheduleDB {
         List<ScheduleForPDF> schedules = new ArrayList<>();
         try{
             Class.forName("org.postgresql.Driver");
-            try (Connection conn = DriverManager.getConnection(url, username, password)){
+            try (Connection conn = DatabaseConnector.getConnection()){
                 conn.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
                 String sql = "SELECT date, activity.name, activity.priority, activity.status from schedule " +
                         "left join activity on schedule.activity_id=activity.id";

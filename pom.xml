@@ -79,8 +79,24 @@
     <dependency>
       <groupId>org.apache.pdfbox</groupId>
       <artifactId>pdfbox</artifactId>
-      <version>3.0.0</version>
+      <version>3.0.2</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox-tools -->
+    <dependency>
+      <groupId>org.apache.pdfbox</groupId>
+      <artifactId>pdfbox-tools</artifactId>
+      <version>3.0.2</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox-app -->
+    <dependency>
+      <groupId>org.apache.pdfbox</groupId>
+      <artifactId>pdfbox-app</artifactId>
+      <version>3.0.2</version>
+    </dependency>
+
+
+    <!-- https://mvnrepository.com/artifact/com.itextpdf/itextpdf -->
+
     <!-- Telegram Bots API -->
     <dependency>
       <groupId>org.telegram</groupId>

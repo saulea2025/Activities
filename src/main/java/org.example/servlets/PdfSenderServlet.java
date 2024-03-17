@@ -2,6 +2,7 @@ package org.example.servlets;
 
 import org.example.senders.MainSender;
 import org.example.senders.ScheduledMain;
+import org.example.senders.TelegramSender;
 
 import javax.mail.MailSessionDefinition;
 import javax.servlet.ServletException;
@@ -13,6 +14,6 @@ public class PdfSenderServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        ScheduledMain.scheduleExecution(22, 56);
+        ScheduledMain.scheduleExecution(17, 50);
     }
 }
