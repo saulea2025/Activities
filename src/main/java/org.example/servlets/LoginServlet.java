@@ -7,6 +7,7 @@ import io.jsonwebtoken.security.Keys;
 import org.example.DAO.PersonDB;
 import org.example.DTO.*;
 import org.example.models.Person;
+import org.example.senders.DataToPdf;
 import org.example.senders.EmailSender;
 import org.example.senders.ScheduledMain;
 import org.example.senders.TelegramSender;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Optional;
@@ -36,6 +38,8 @@ public class LoginServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        TelegramSender telegramSender = new TelegramSender();
+        telegramSender.run();
         PersonDTO personDTO = new Gson().fromJson(request.getReader(), PersonDTO.class);
         Optional<Person> personOptional = personService.getPerson(personDTO);
         if(personOptional.isPresent()) {
