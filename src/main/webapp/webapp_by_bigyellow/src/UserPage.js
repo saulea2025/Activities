@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const UsersPage = () => {
-    const [activities, setActivities] = useState([]);
+    /*const [activities, setActivities] = useState([]);
     const [activityId, setActivityId] = useState('');
     const [loading, setLoading] = useState(false);
 
@@ -21,7 +21,7 @@ const UsersPage = () => {
         } finally {
             setLoading(false);
         }
-    };
+    };*/
 
 
     return(

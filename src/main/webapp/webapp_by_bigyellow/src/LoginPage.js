@@ -1,12 +1,13 @@
 // LoginPage.js
 import React, {Component, useState} from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 function LoginPage({ onLogin }) {
     const [post, setPost] = useState({
         email: '',
         password: ''
     })
-    
+    const navigate = useNavigate();
     const handleInput = (event) => {
         setPost({...post, [event.target.name]: event.target.value})
     };
@@ -14,7 +15,11 @@ function LoginPage({ onLogin }) {
     function handleSubmit(event) {
         event.preventDefault()
         axios.post('http://192.168.100.21:8080/login', post)
-            .then(response => console.log(response))
+            .then(function (response) {
+                console.log(response);
+                console.log("Successfully Logged in ");
+                navigate('/menu'); //use this  instead of history.push
+            })
             .catch(err => console.log(err))
     }
 
