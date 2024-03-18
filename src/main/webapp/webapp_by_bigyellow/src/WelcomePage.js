@@ -17,6 +17,8 @@ function WelcomePage({ username, onLogout }) {
             .then(function (response) {
                 console.log(response);
                 console.log("Successfully Logged out ");
+                //localStorage.setItem('jwtToken', '');
+                localStorage.clear();
                 navigate('/'); //use this  instead of history.push
             })
             .catch(err => console.log(err))

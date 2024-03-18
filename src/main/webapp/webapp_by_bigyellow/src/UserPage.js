@@ -20,7 +20,7 @@ const UsersPage = () => {
             try {
                 const token = localStorage.getItem('jwtToken'); // Получение токена из localStorage
                 const headers = {
-                    'Authorization': `Bearer ${token}` // Создание заголовка Authorization с токеном
+                    'Authorization': `${token}` // Создание заголовка Authorization с токеном
                 };
                 console.log(headers);
                 const response = await axios.get('http://192.168.100.21:8080/users', {headers: headers});
@@ -38,12 +38,14 @@ const UsersPage = () => {
         event.preventDefault()
         const token = localStorage.getItem('jwtToken'); // Получение токена из localStorage
         const headers = {
-            'Authorization': `Bearer ${token}` // Создание заголовка Authorization с токеном
+            'Authorization': `${token}` // Создание заголовка Authorization с токеном
         };
         axios.get('http://192.168.100.21:8080/logout', { headers: headers })
             .then(function (response) {
                 console.log(response);
                 console.log("Successfully Logged out ");
+                //localStorage.setItem('jwtToken', '');
+                localStorage.clear();
                 navigate('/'); //use this  instead of history.push
             })
             .catch(err => console.log(err))
@@ -54,7 +56,7 @@ const UsersPage = () => {
     const handleSelectChange = (event) => {
         const token = localStorage.getItem('jwtToken'); // Получение токена из localStorage
         const headers = {
-            'Authorization': `Bearer ${token}` // Создание заголовка Authorization с токеном
+            'Authorization': `${token}` // Создание заголовка Authorization с токеном
         };
         setPost({...post, [event.target.name]: event.target.value})
         console.log(post)
