@@ -2,6 +2,7 @@ package org.example.servlets;
 
 import com.google.gson.Gson;
 import org.example.DAO.ActivityDB;
+import org.example.DAO.PersonDB;
 import org.example.DTO.ActivityDTO;
 import org.example.DTO.PersonActivityDTO;
 import org.example.DTO.PersonActivityWithRoleDTO;
@@ -46,7 +47,9 @@ public class ActivitiesServlet extends HttpServlet {
     }
     private String getRole(HttpServletRequest request){
         HttpSession session = request.getSession();
-        Person person = (Person) session.getAttribute("person");
+        String id = (String) session.getAttribute("id");
+        int personId = Integer.parseInt(id);
+        Person person = (Person) PersonDB.getById(personId);
         return person.getRole();
     }
 }
