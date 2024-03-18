@@ -5,12 +5,26 @@ import LoginPage from "./LoginPage";
 import WelcomePage from "./WelcomePage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import UserPage from "./UserPage";
+import ActivitiesPage from "./ActivitiesPage";
+import axios from "axios";
 
 function App() {
-    const [cookies, setCookie, removeCookie] = useCookies(['user']);
-    const [isLoggedIn, setIsLoggedIn] = useState(!!cookies.user);
+    axios.defaults.withCredentials = true;
 
-    const handleLogin = (user) => {
+    //const [cookies, setCookie, removeCookie] = useCookies(['user']);
+    const [cookies, setCookie] = useCookies(['sessionId']);
+    // Задать куку
+    const handleSetSessionCookie = () => {
+        const sessionId = 'your-session-id';
+        setCookie('sessionId', sessionId, { path: '/' });
+    };
+
+    // Получить значение куки
+    const handleGetSessionCookie = () => {
+        const sessionId = cookies['sessionId'];
+        console.log('Session ID:', sessionId);
+    };
+/*    const handleLogin = (user) => {
         setCookie('user', user, { path: '/' });
         setIsLoggedIn(true);
     };
@@ -18,13 +32,15 @@ function App() {
     const handleLogout = () => {
         removeCookie('user');
         setIsLoggedIn(false);
-    };
+    };*/
 
     return (
         <Router>
             <Routes>
-                <Route path="/" element={isLoggedIn ? <WelcomePage username={cookies.user.username} onLogout={handleLogout} /> : <LoginPage onLogin={handleLogin} />} />
+                <Route path="/" element={<LoginPage />} />
+                <Route path="/menu" element={<WelcomePage />} />
                 <Route path="/user" element={<UserPage />} />
+                <Route path="/activities" element={<ActivitiesPage />} />
             </Routes>
         </Router>
     );

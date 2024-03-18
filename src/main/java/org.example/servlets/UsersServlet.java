@@ -33,8 +33,10 @@ public class UsersServlet extends HttpServlet {
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
+        System.out.println("get /users");
         int personId = getId(request);
         List<ActivityDTO> activities = activitiesService.selectByPerson(personId);
+        System.out.println(activities.toString());
         String json = new Gson().toJson(activities);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
@@ -51,7 +53,8 @@ public class UsersServlet extends HttpServlet {
     }
     private int getId(HttpServletRequest request){
         HttpSession session = request.getSession();
-        Person person = (Person) session.getAttribute("person");
-        return person.getId();
+        //Person person = (Person) session.getAttribute("person");
+        //return person.getId();
+        return Integer.parseInt((String) session.getAttribute("id"));
     }
 }

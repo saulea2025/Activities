@@ -1,23 +1,32 @@
 // LoginPage.js
-import React, { useState } from "react";
-
+import React, {Component, useState} from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import {setRawCookie} from "react-cookies";
 function LoginPage({ onLogin }) {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        if (name === "username") {
-            setUsername(value);
-        } else if (name === "password") {
-            setPassword(value);
-        }
+    const [post, setPost] = useState({
+        email: '',
+        password: ''
+    })
+    const navigate = useNavigate();
+    const handleInput = (event) => {
+        setPost({...post, [event.target.name]: event.target.value})
     };
 
-    const handleLogin = () => {
-        // Выполняем аутентификацию и передаем данные пользователя в родительский компонент
-        onLogin({ username, password });
-    };
+    function handleSubmit(event) {
+        event.preventDefault()
+        console.log(post);
+        axios.post('http://192.168.100.21:8080/login', post)
+            .then(function (response) {
+                console.log(response);
+                console.log("Successfully Logged in ");
+                console.log(response.data.id);
+                localStorage.setItem('jwtToken', response.data.id);
+                navigate('/menu'); //use this  instead of history.push
+            })
+            .catch(err => console.log(err))
+
+    }
 
     return (
         <div className="container">
@@ -26,16 +35,15 @@ function LoginPage({ onLogin }) {
             <form>
                 <div>
                     <label>Username:</label>
-                    <input type="text" name="username" value={username} onChange={handleInputChange} />
+                    <input type="text" name="email" onChange={handleInput} />
                 </div>
                 <div>
                     <label>Password:</label>
-                    <input type="password" name="password" value={password} onChange={handleInputChange} />
+                    <input type="password" name="password" onChange={handleInput} />
                 </div>
-                <button className="login-btn" type="button" onClick={handleLogin}>Login</button>
+                <button className="login-btn" type="button" onClick={handleSubmit}>Login</button>
             </form>
         </div>
     );
 }
-
 export default LoginPage;
