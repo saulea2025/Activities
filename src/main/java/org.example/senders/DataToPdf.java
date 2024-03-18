@@ -3,6 +3,7 @@ package org.example.senders;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
@@ -19,7 +20,7 @@ public class DataToPdf {
         List<ScheduleForPDF> schedules = ScheduleDB.getSchedule();
        // Person person = PersonDB.getById(personId);
         try (PDDocument document = new PDDocument()) {
-            PDPage page = new PDPage();
+            PDPage page = new PDPage(new PDRectangle(PDRectangle.A4.getHeight(), PDRectangle.A4.getWidth())); // Define landscape dimensions
             document.addPage(page);
             PDPageContentStream contentStream = new PDPageContentStream(document, page);
 
