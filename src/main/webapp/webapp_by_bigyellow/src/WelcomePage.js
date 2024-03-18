@@ -9,9 +9,11 @@ function WelcomePage({ username, onLogout }) {
 
     function handleLogout(event) {
         event.preventDefault()
-        axios.get('http://192.168.100.21:8080/logout', {
-            //withCredentials: true,
-        })
+        const token = localStorage.getItem('jwtToken'); // Получение токена из localStorage
+        const headers = {
+            'Authorization': `Bearer ${token}` // Создание заголовка Authorization с токеном
+        };
+        axios.get('http://192.168.100.21:8080/logout', { headers: headers })
             .then(function (response) {
                 console.log(response);
                 console.log("Successfully Logged out ");
