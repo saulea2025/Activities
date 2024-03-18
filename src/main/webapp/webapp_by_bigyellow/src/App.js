@@ -13,6 +13,7 @@ function App() {
 
     //const [cookies, setCookie, removeCookie] = useCookies(['user']);
     const [cookies, setCookie] = useCookies(['sessionId']);
+    localStorage.setItem("url", "http://192.168.100.21:8080")
     // Задать куку
     const handleSetSessionCookie = () => {
         const sessionId = 'your-session-id';
