@@ -32,10 +32,11 @@ function WelcomePage({ username, onLogout }) {
 
     return (
         <div className="container">
-            <p>You are successfully logged in, {username}!</p>
+            {/*<p>You are successfully logged in, {username}!</p>*/}
+            <p>You are successfully logged in!</p>
             <button className="logout-btn" onClick={handleLogout}>Logout</button>
-            <button className="user-page-btn" onClick={handleGoToUserPage}>Go to User Page</button>
-            <button className="activities-page-btn" onClick={handleGoToActivitiesPage}>Go to Activities Page</button>
+            <button className="user-page-btn" onClick={handleGoToUserPage}>Go to your activities</button>
+            <button className="activities-page-btn" onClick={handleGoToActivitiesPage}>Go to all activities</button>
         </div>
     );
 

@@ -15,6 +15,7 @@ function LoginPage({ onLogin }) {
 
     function handleSubmit(event) {
         event.preventDefault()
+        console.log(post);
         axios.post('http://192.168.100.21:8080/login', post)
             .then(function (response) {
                 console.log(response);

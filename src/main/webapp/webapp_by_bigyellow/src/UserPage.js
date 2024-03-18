@@ -1,5 +1,5 @@
 // UsersPage.js
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 
@@ -11,7 +11,10 @@ const UsersPage = () => {
 
     const navigate = useNavigate();
 
-    const [selectedValue, setSelectedValue] = useState('');
+    //const [id, setId] = useState('');
+    const [post, setPost] = useState({
+        id: '1',
+    })
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -46,30 +49,20 @@ const UsersPage = () => {
             .catch(err => console.log(err))
 
     }
-    /*useEffect(() => {
-        fetchActivities();
-    }, []);
 
-    const fetchActivities = async () => {
+
+    const handleSelectChange = (event) => {
         const token = localStorage.getItem('jwtToken'); // Получение токена из localStorage
         const headers = {
             'Authorization': `Bearer ${token}` // Создание заголовка Authorization с токеном
         };
-        try {
-            setLoading(true);
-            const response = await axios.get('http://192.168.100.21/users', {headers: headers});
-            setActivities(response.data);
-        } catch (error) {
-            console.error('Error fetching activities:', error);
-        } finally {
-            setLoading(false);
-        }
-    };*/
-
-
-    const handleSelectChange = (event) => {
-        setSelectedValue(event.target.value);
-        console.log(selectedValue)
+        setPost({...post, [event.target.name]: event.target.value})
+        console.log(post)
+        axios.post('http://192.168.100.21:8080/users', post, { headers: headers })
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(err => console.log(err))
     }
 
     /*    return(
@@ -81,9 +74,9 @@ const UsersPage = () => {
             {loading && <p>Loading...</p>}
             <form>
                 <label htmlFor="activities_select">Выберите текущую активность:</label>
-                <select id="activities" name="activities" onChange={handleSelectChange}>
+                <select id="id" name="id" onChange={handleSelectChange}>
                     {activities.map(activity => (
-                        <option key={activity.id} value={activity.name}>{activity.name}</option>
+                        <option key={activity.id} value={activity.id}>{activity.name}</option>
                         ))}
                 </select>
             </form>
@@ -93,17 +86,6 @@ const UsersPage = () => {
                 ))}
             </ul>
             <button className="logout-btn" type="button" onClick={handleLogout}>Logout</button>
-{/*            <form onSubmit={handleActivitySubmit}>
-            <label>
-                Activity ID:
-                <input
-                    type="text"
-                    value={activityId}
-                    onChange={(e) => setActivityId(e.target.value)}
-                />
-            </label>
-            <button type="submit">Add Activity</button>
-        </form>*/}
         </div>
     );
 };
