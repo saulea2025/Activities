@@ -1,20 +1,15 @@
 package org.example.senders;
 
-import org.apache.fontbox.FontBoxFont;
-import org.apache.fontbox.ttf.TrueTypeFont;
-import org.apache.fontbox.util.autodetect.FontDirFinder;
-import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.font.*;
-import org.example.DAO.PersonDB;
+import org.apache.pdfbox.pdmodel.font.PDFont;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
 import org.example.DAO.ScheduleDB;
-import org.example.models.Person;
 import org.example.models.ScheduleForPDF;
 
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
