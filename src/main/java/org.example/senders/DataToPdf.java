@@ -17,9 +17,8 @@ import java.util.List;
 
 public class DataToPdf {
     public static void generatePdfFromResultSet(OutputStream outputStream) {
-        ScheduleDB scheduleDB = new ScheduleDB();
-        List<ScheduleForPDF> schedules = scheduleDB.getSchedule();
-       // Person person = PersonDB.getById(personId);
+        List<ScheduleForPDF> schedules = ScheduleDB.getSchedule();
+        // Person person = PersonDB.getById(personId);
         try (PDDocument document = new PDDocument()) {
             PDPage page = new PDPage(new PDRectangle(PDRectangle.A4.getHeight(), PDRectangle.A4.getWidth())); // Define landscape dimensions
             document.addPage(page);
