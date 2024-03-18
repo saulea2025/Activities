@@ -20,8 +20,8 @@ public class ActivitiesService {
     public List<PersonActivityDTO> getActivities(){
         return activityDB.select();
     }
-    public void addActivity(ActivityDTO activityDTO){
-        activityDB.add(activityDTO);
+    public int addActivity(ActivityDTO activityDTO){
+        return activityDB.add(activityDTO);
     }
     public int changeStatus(int activityId, String status){
         return activityDB.changeStatus(activityId, status);

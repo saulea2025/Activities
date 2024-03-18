@@ -60,7 +60,7 @@ public class ScheduleDB {
         }
         return schedules;
     }*/
-    public static List<ScheduleForPDF> getSchedule() {
+    public List<ScheduleForPDF> getSchedule() {
         List<ScheduleForPDF> schedules = new ArrayList<>();
         try{
             Class.forName("org.postgresql.Driver");
