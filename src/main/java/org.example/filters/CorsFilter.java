@@ -15,10 +15,8 @@ public class CorsFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
 
-        System.out.println("cors filter");
-
-
        // response.setHeader("Set-Cookie", "key=value; HttpOnly; SameSite=none; Secure=true");
+        //response.setHeader("Access-Control-Allow-Origin", "http://192.168.56.1:3000");
         response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
