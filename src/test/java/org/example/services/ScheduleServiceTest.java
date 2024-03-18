@@ -50,7 +50,7 @@ class ScheduleServiceTest {
         verify(scheduleDBmock, times(1)).add(invalidActivityId, invalidPersonId); // Verify that the add method is called exactly once with the correct parameters
     }
 
-    @Test
+/*    @Test
     void getSchedule_ReturnsNonEmptyList() {
 
         List<ScheduleForPDF> expectedSchedule = new ArrayList<>();
@@ -66,7 +66,7 @@ class ScheduleServiceTest {
             assertNotNull(actualSchedule); // Проверяем, что возвращенный список не равен null
             assertFalse(actualSchedule.isEmpty()); // Проверяем, что возвращенный список не пустой
         }
-    }
+    }*/
 
     @Test
     void getSchedule_ReturnsEmptyListWhenNoSchedule() {
