@@ -16,27 +16,11 @@ import java.util.Optional;
 import java.util.Properties;
 
 public class PersonDB {
-    private static String url;
-    private static String username;
-    private static String password;
-    private static Properties propertiesDB;
-    static{
-        propertiesDB = new Properties();
-        try {
-            propertiesDB.load(ActivityDB.class.getClassLoader().getResourceAsStream("database.properties"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        url = propertiesDB.getProperty("url");
-        username = propertiesDB.getProperty("username");
-        password = propertiesDB.getProperty("password");
-
-    }
     public Optional<Person> findByEmailAndPassword(String userEmail, String userPassword) {
         Optional<Person> personOptional = Optional.empty();
         try{
             Class.forName("org.postgresql.Driver");
-            try (Connection conn = DriverManager.getConnection(url, username, password)){
+            try (Connection conn = DatabaseConnector.getConnection()){
                 conn.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
                 String sql = "select * FROM person where email=? and password=?";
                 try(PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
@@ -66,7 +50,7 @@ public class PersonDB {
         Person person = null;
         try{
             Class.forName("org.postgresql.Driver");
-            try (Connection conn = DriverManager.getConnection(url, username, password)){
+            try (Connection conn = DatabaseConnector.getConnection()){
                 conn.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
                 String sql = "select * FROM person where id=?";
                 try(PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
@@ -94,7 +78,7 @@ public class PersonDB {
         String telegram = null;
         try{
             Class.forName("org.postgresql.Driver");
-            try (Connection conn = DriverManager.getConnection(url, username, password)){
+            try (Connection conn = DatabaseConnector.getConnection()){
                 conn.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
                 String sql = "select telegram FROM person where id=?";
                 try(PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
@@ -111,11 +95,11 @@ public class PersonDB {
         }
         return telegram;
     }
-    public static Person select(int id) {
+    public Person select(int id) {
         Person person = null;
         try{
             Class.forName("org.postgresql.Driver");
-            try (Connection conn = DriverManager.getConnection(url, username, password)){
+            try (Connection conn = DatabaseConnector.getConnection()){
                 conn.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
                 String sql = "select * from person where id=?";
                 try(PreparedStatement preparedStatement = conn.prepareStatement(sql)) {

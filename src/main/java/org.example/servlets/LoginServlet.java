@@ -44,10 +44,9 @@ public class LoginServlet extends HttpServlet {
 
             HttpSession session = request.getSession();
             session.setAttribute("person", personOptional.get());
-            System.out.println("set attribute");
-            Person person = PersonDB.select(personOptional.get().getId());
-            PersonWithTokenDTO personWithTokenDTO = new PersonWithTokenDTO(person, generateJWT(person.getEmail()));
-            String json = new Gson().toJson(personWithTokenDTO);
+            PersonDB personDB = new PersonDB();
+            Person person = personDB.select(personOptional.get().getId());
+            String json = new Gson().toJson(person);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(json);
@@ -57,13 +56,4 @@ public class LoginServlet extends HttpServlet {
             response.setStatus(401);
         }
     }
-    private String generateJWT(String email) throws IOException {
-        //SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-        String token = Jwts.builder()
-                .setSubject(email) // Используем email как subject токена
-                .signWith(SignatureAlgorithm.HS256, "your-secret-key-your-secret-key-your-secret-key".getBytes(StandardCharsets.UTF_8)) // Подписываем токен секретным ключом
-                .compact();
-        return token;
-    }
-
 }

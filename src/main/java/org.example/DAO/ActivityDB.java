@@ -16,28 +16,12 @@ import java.util.List;
 import java.util.Properties;
 
 public class ActivityDB {
-    private static String url;
-    private static String username;
-    private static String password;
-    private static Properties propertiesDB;
-    static{
-        propertiesDB = new Properties();
-        try {
-            propertiesDB.load(ActivityDB.class.getClassLoader().getResourceAsStream("database.properties"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        url = propertiesDB.getProperty("url");
-        username = propertiesDB.getProperty("username");
-        password = propertiesDB.getProperty("password");
-
-    }
     public List<PersonActivityDTO> select() {
 
         List<PersonActivityDTO> activities = new ArrayList<PersonActivityDTO>();
         try{
             Class.forName("org.postgresql.Driver");
-            try (Connection conn = DriverManager.getConnection(url, username, password)){
+            try (Connection conn = DatabaseConnector.getConnection()){
                 conn.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
                 String sql = "select activity.id, activity.name, activity.priority, activity.status, person.name, person.surname\n" +
                         "from activity left join person\n" +
@@ -65,7 +49,7 @@ public class ActivityDB {
     public int add(ActivityDTO activityDTO) {
         try{
             Class.forName("org.postgresql.Driver");
-            try (Connection conn = DriverManager.getConnection(url, username, password)){
+            try (Connection conn = DatabaseConnector.getConnection()){
                 conn.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
                 String sql = "INSERT INTO activity (name, priority, status) Values (?, ?, ?)";
                 try(PreparedStatement preparedStatement = conn.prepareStatement(sql)){
@@ -86,7 +70,7 @@ public class ActivityDB {
         List<ActivityDTO> activities = new ArrayList<ActivityDTO>();
         try{
             Class.forName("org.postgresql.Driver");
-            try (Connection conn = DriverManager.getConnection(url, username, password)){
+            try (Connection conn = DatabaseConnector.getConnection()){
                 conn.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
                 String sql = "select id, name, priority, status from activity\n" +
                         "WHERE person_id=?";
@@ -113,7 +97,7 @@ public class ActivityDB {
         int chanchedRows = 0;
         try{
             Class.forName("org.postgresql.Driver");
-            try (Connection conn = DriverManager.getConnection(url, username, password)){
+            try (Connection conn = DatabaseConnector.getConnection()){
                 conn.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
                 String sql = "Update activity set person_id=? where id=? ";
                 try(PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
@@ -132,7 +116,7 @@ public class ActivityDB {
         int chanchedRows = 0;
         try{
             Class.forName("org.postgresql.Driver");
-            try (Connection conn = DriverManager.getConnection(url, username, password)){
+            try (Connection conn = DatabaseConnector.getConnection()){
                 conn.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
                 String sql = "Update activity set status=? where id=? ";
                 try(PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
