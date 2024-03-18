@@ -36,40 +36,38 @@ public class AccessFilter implements Filter {
         String path = httpRequest.getServletPath();
         HttpSession session = httpRequest.getSession();
 
-
         System.out.println("access filter");
-
-
-
         String token = httpRequest.getHeader("Authorization");
-        System.out.println("token: " + token);
-
-
-
-
-
-        if(token==null && path.equals("/login")) {
-            filterChain.doFilter(servletRequest, servletResponse);
-            return;
-        }
-
-        token = token.substring(7);
-        System.out.println("real token: " + token);
-
-        System.out.println((Person)session.getAttribute("person"));
-        if ((AUTHORIZED_ALLOWED_PAGES.contains(path) || path.startsWith("/activities/") || path.startsWith("/users/"))){
-            session.setAttribute("id", token);
-            HttpServletResponse response = (HttpServletResponse) servletResponse;
-            filterChain.doFilter(servletRequest, servletResponse);
-            return;
-        }
-        else {
-            if(UNAUTHORIZED_ALLOWED_PAGES.contains(path)) {
+        System.out.println("header: " + token);
+        if ((token!=null)&& (AUTHORIZED_ALLOWED_PAGES.contains(path) || path.startsWith("/activities/") || path.startsWith("/users/"))){
+            if(!token.equals("null")) {
+                System.out.println("authorized");
+                session.setAttribute("id", token);
+                HttpServletResponse response = (HttpServletResponse) servletResponse;
                 filterChain.doFilter(servletRequest, servletResponse);
                 return;
             }
             else httpResponse.setStatus(401);
         }
+        else{
+            System.out.println("unauthorized");
+            if(UNAUTHORIZED_ALLOWED_PAGES.contains(path)) {
+                filterChain.doFilter(servletRequest, servletResponse);
+                return;
+            }
+            else
+                httpResponse.setStatus(401);
+        }
+
+
+
+/*        else {
+            if(UNAUTHORIZED_ALLOWED_PAGES.contains(path)) {
+                filterChain.doFilter(servletRequest, servletResponse);
+                return;
+            }
+            else httpResponse.setStatus(401);
+        }*/
     }
 
     @Override
