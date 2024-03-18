@@ -21,7 +21,8 @@ import java.util.List;
 
 public class DataToPdf {
     public static void generatePdfFromResultSet(OutputStream outputStream) {
-        List<ScheduleForPDF> schedules = ScheduleDB.getSchedule();
+        ScheduleDB scheduleDB = new ScheduleDB();
+        List<ScheduleForPDF> schedules = scheduleDB.getSchedule();
        // Person person = PersonDB.getById(personId);
         try (PDDocument document = new PDDocument()) {
             PDPage page = new PDPage();
