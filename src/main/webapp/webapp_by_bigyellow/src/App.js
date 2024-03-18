@@ -9,10 +9,22 @@ import ActivitiesPage from "./ActivitiesPage";
 import axios from "axios";
 
 function App() {
-    const [cookies, setCookie, removeCookie] = useCookies(['user']);
-    const [isLoggedIn, setIsLoggedIn] = useState(!!cookies.user);
+    axios.defaults.withCredentials = true;
 
-    const handleLogin = (user) => {
+    //const [cookies, setCookie, removeCookie] = useCookies(['user']);
+    const [cookies, setCookie] = useCookies(['sessionId']);
+    // Задать куку
+    const handleSetSessionCookie = () => {
+        const sessionId = 'your-session-id';
+        setCookie('sessionId', sessionId, { path: '/' });
+    };
+
+    // Получить значение куки
+    const handleGetSessionCookie = () => {
+        const sessionId = cookies['sessionId'];
+        console.log('Session ID:', sessionId);
+    };
+/*    const handleLogin = (user) => {
         setCookie('user', user, { path: '/' });
         setIsLoggedIn(true);
     };
@@ -20,7 +32,7 @@ function App() {
     const handleLogout = () => {
         removeCookie('user');
         setIsLoggedIn(false);
-    };
+    };*/
 
     return (
         <Router>

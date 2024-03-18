@@ -9,13 +9,16 @@ function WelcomePage({ username, onLogout }) {
 
     function handleLogout(event) {
         event.preventDefault()
-        axios.get('http://192.168.100.21:8080/logout')
+        axios.get('http://192.168.100.21:8080/logout', {
+            //withCredentials: true,
+        })
             .then(function (response) {
                 console.log(response);
                 console.log("Successfully Logged out ");
                 navigate('/'); //use this  instead of history.push
             })
             .catch(err => console.log(err))
+
     }
 
     const handleGoToUserPage = () => {

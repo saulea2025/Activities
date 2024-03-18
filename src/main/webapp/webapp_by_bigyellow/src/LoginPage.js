@@ -2,6 +2,7 @@
 import React, {Component, useState} from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import {setRawCookie} from "react-cookies";
 function LoginPage({ onLogin }) {
     const [post, setPost] = useState({
         email: '',
@@ -21,6 +22,7 @@ function LoginPage({ onLogin }) {
                 navigate('/menu'); //use this  instead of history.push
             })
             .catch(err => console.log(err))
+
     }
 
     return (
