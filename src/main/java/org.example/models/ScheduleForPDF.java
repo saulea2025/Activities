@@ -8,18 +8,19 @@ import java.sql.Timestamp;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class ScheduleForPDF {
     private Timestamp timeOfStart;
-    private String activityName;
-    private String activityPriority;
-    private String activityStatus;
+    private String personName; // Renamed from activityName
+    private String task; // Added task field
+    private String priority;
+    private String status;
 
     @Override
     public String toString() {
-        return "time of start: " + timeOfStart +
-                ", name: " + activityName + '\'' +
-                ", priority: " + activityPriority + '\'' +
-                ", status: " + activityStatus;
+        return "Time of Start: " + timeOfStart +
+                ", Person's Name: " + personName + '\'' +
+                ", Task: " + task + '\'' +
+                ", Priority: " + priority + '\'' +
+                ", Status: " + status;
     }
 }
