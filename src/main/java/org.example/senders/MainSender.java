@@ -7,5 +7,6 @@ public class MainSender {
 
         TelegramSender telegramSender = new TelegramSender();
         telegramSender.run();
+        System.exit(0);
     }
 }

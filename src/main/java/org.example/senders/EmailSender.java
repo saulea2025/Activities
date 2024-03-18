@@ -124,6 +124,7 @@ public class EmailSender {
             // Send message
             Transport.send(message);
             System.out.println("Email sent successfully to " + to);
+
         } catch (MessagingException mex) {
             mex.printStackTrace();
         }
