@@ -44,7 +44,8 @@ public class LoginServlet extends HttpServlet {
 
             HttpSession session = request.getSession();
             session.setAttribute("person", personOptional.get());
-            Person person = PersonDB.select(personOptional.get().getId());
+            PersonDB personDB = new PersonDB();
+            Person person = personDB.select(personOptional.get().getId());
             String json = new Gson().toJson(person);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
