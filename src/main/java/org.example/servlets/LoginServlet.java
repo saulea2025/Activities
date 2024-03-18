@@ -50,32 +50,18 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("person", personOptional.get());
             Person person = PersonDB.select(personOptional.get().getId());
 
-            String json = new Gson().toJson(person);
+
+            IdDTO idDto= new IdDTO(person.getId());
+            String json = new Gson().toJson(idDto);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(json);
             response.setStatus(200);
-
-
-            Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-            System.out.println(key.getEncoded());
-
-            // Генерация JWT токена
-            String jwt = Jwts.builder()
-                    .setSubject("user123")
-                    //.signWith(key)
-                    .compact();
-
-            System.out.println("Сгенерированный JWT: " + jwt);
-
-
 
         }
         else {
             response.setStatus(401);
         }
     }
-
-    public static void main(String[] args) {
 
 }

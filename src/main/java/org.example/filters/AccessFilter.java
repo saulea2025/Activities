@@ -4,6 +4,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtParserBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.SignatureException;
+import org.bouncycastle.tsp.TSPUtil;
+import org.example.models.Person;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -33,7 +35,30 @@ public class AccessFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
         String path = httpRequest.getServletPath();
         HttpSession session = httpRequest.getSession();
-        if (nonNull(session.getAttribute("person")) && (AUTHORIZED_ALLOWED_PAGES.contains(path) || path.startsWith("/activities/") || path.startsWith("/users/"))){
+
+
+        System.out.println("access filter");
+
+
+
+        String token = httpRequest.getHeader("Authorization");
+        System.out.println("token: " + token);
+
+
+
+
+
+        if(token==null && path.equals("/login")) {
+            filterChain.doFilter(servletRequest, servletResponse);
+            return;
+        }
+
+        token = token.substring(7);
+        System.out.println("real token: " + token);
+
+        System.out.println((Person)session.getAttribute("person"));
+        if ((AUTHORIZED_ALLOWED_PAGES.contains(path) || path.startsWith("/activities/") || path.startsWith("/users/"))){
+            session.setAttribute("id", token);
             HttpServletResponse response = (HttpServletResponse) servletResponse;
             filterChain.doFilter(servletRequest, servletResponse);
             return;
