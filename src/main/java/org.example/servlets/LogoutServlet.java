@@ -12,6 +12,7 @@ import java.io.IOException;
 public class LogoutServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        System.out.println("get logout");
         final HttpSession session = request.getSession();
         session.removeAttribute("person");
         session.invalidate();

@@ -16,14 +16,12 @@ import org.example.services.PersonService;
 import javax.crypto.SecretKey;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
+import java.util.Date;
 import java.util.Optional;
 
 @WebServlet(name = "login", value = "/login")
@@ -38,6 +36,7 @@ public class LoginServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        System.out.println("login servlet");
         PersonDTO personDTO = new Gson().fromJson(request.getReader(), PersonDTO.class);
         Optional<Person> personOptional = personService.getPerson(personDTO);
         if(personOptional.isPresent()) {
@@ -50,6 +49,15 @@ public class LoginServlet extends HttpServlet {
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(json);
             response.setStatus(200);
+
+            String key = "your-secret-keyyour-secret-keyyour-secret-key";
+
+            String token = Jwts.builder()
+                    .subject(person.getEmail())
+                    .signWith(SignatureAlgorithm.HS256, key)
+                    .compact();
+            System.out.println("token is ready");
+            response.setHeader("Authorization", token);
         }
         else {
             response.setStatus(401);

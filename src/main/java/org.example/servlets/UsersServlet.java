@@ -33,6 +33,7 @@ public class UsersServlet extends HttpServlet {
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
+        System.out.println("get /users");
         int personId = getId(request);
         List<ActivityDTO> activities = activitiesService.selectByPerson(personId);
         String json = new Gson().toJson(activities);
