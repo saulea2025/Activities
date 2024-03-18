@@ -14,6 +14,6 @@ public class PdfSenderServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        ScheduledMain.scheduleExecution(17, 50);
+        ScheduledMain.scheduleExecution(0, 0);
     }
 }

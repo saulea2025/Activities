@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
 
@@ -75,7 +76,7 @@ public class ActivityDB {
                 String sql = "select id, name, priority, status from activity\n" +
                         "WHERE person_id=?";
                 try(PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
-                    preparedStatement.setInt(personId, 1);
+                    preparedStatement.setInt(1, personId);
                     ResultSet resultSet = preparedStatement.executeQuery();
                     while (resultSet.next()) {
                         int id = resultSet.getInt(1);
