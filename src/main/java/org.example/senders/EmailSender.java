@@ -16,7 +16,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
-
 public class EmailSender {
 
     private Connection connection; // Assuming this is initialized elsewhere
@@ -125,6 +124,7 @@ public class EmailSender {
             // Send message
             Transport.send(message);
             System.out.println("Email sent successfully to " + to);
+
         } catch (MessagingException mex) {
             mex.printStackTrace();
         }
